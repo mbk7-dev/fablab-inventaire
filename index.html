@@ -17,13 +17,11 @@
       --rose-fonce: #b06f6b;
       --taupe: #5a4f48;
       --taupe-clair: #8c8078;
-      --marine: #2e4756;
     }
     * { box-sizing: border-box; }
     body {
       font-family: 'Quicksand', system-ui, sans-serif;
-      margin: 0; color: var(--taupe);
-      min-height: 100vh;
+      margin: 0; color: var(--taupe); min-height: 100vh;
       background:
         radial-gradient(1200px 600px at 80% -10%, #fbe9e4 0%, transparent 55%),
         radial-gradient(1000px 500px at -10% 10%, #f3ead8 0%, transparent 50%),
@@ -37,44 +35,27 @@
       background: url("logo.webp") no-repeat center; background-size: contain;
       opacity: 0.03; pointer-events: none; z-index: 0;
     }
-
-    header {
-      text-align: center; padding: 40px 16px 10px;
-      position: relative; z-index: 1;
-    }
+    header { text-align: center; padding: 40px 16px 10px; position: relative; z-index: 1; }
     header img.logo {
       width: 118px; height: auto;
       animation: apparition 0.8s cubic-bezier(.2,.8,.2,1);
       filter: drop-shadow(0 6px 14px rgba(90,79,72,0.18));
     }
-    header h1 {
-      font-size: 27px; color: var(--taupe); margin: 16px 0 0;
-      font-weight: 700; letter-spacing: -0.3px;
-    }
-    header .sous-titre {
-      color: var(--rose-fonce); font-size: 12px; letter-spacing: 3px;
-      text-transform: uppercase; margin-top: 5px; font-weight: 600;
-    }
+    header h1 { font-size: 27px; color: var(--taupe); margin: 16px 0 0; font-weight: 700; letter-spacing: -0.3px; }
+    header .sous-titre { color: var(--rose-fonce); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; font-weight: 600; }
 
-    .onglets {
-      display: flex; gap: 10px; max-width: 640px; margin: 26px auto 0;
-      padding: 0 18px; position: relative; z-index: 1;
-    }
+    .onglets { display: flex; gap: 10px; max-width: 640px; margin: 26px auto 0; padding: 0 18px; position: relative; z-index: 1; }
     .onglet {
       flex: 1; padding: 13px; text-align: center; cursor: pointer;
-      background: var(--creme-carte); border: 1.5px solid transparent;
-      border-radius: 18px; font-weight: 600; color: var(--taupe-clair);
-      font-size: 15px; box-shadow: 0 4px 14px rgba(90,79,72,0.07);
+      background: var(--creme-carte); border: 1.5px solid transparent; border-radius: 18px;
+      font-weight: 600; color: var(--taupe-clair); font-size: 15px;
+      box-shadow: 0 4px 14px rgba(90,79,72,0.07);
       transition: all 0.25s cubic-bezier(.2,.8,.2,1); font-family: inherit;
     }
     .onglet:hover { transform: translateY(-1px); }
-    .onglet.actif {
-      color: var(--rose-fonce); border-color: var(--rose-clair);
-      box-shadow: 0 6px 20px rgba(201,138,134,0.18);
-    }
+    .onglet.actif { color: var(--rose-fonce); border-color: var(--rose-clair); box-shadow: 0 6px 20px rgba(201,138,134,0.18); }
 
-    main { max-width: 640px; margin: 0 auto; padding: 22px 18px 60px;
-      position: relative; z-index: 1; }
+    main { max-width: 640px; margin: 0 auto; padding: 22px 18px 60px; position: relative; z-index: 1; }
 
     .barre-wrap { position: relative; }
     #recherche {
@@ -85,15 +66,30 @@
       transition: border-color 0.25s, box-shadow 0.25s;
     }
     #recherche::placeholder { color: #b8ada3; }
-    #recherche:focus {
-      border-color: var(--rose); box-shadow: 0 6px 22px rgba(201,138,134,0.2);
+    #recherche:focus { border-color: var(--rose); box-shadow: 0 6px 22px rgba(201,138,134,0.2); }
+    .barre-wrap .loupe { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 17px; opacity: 0.5; pointer-events: none; }
+
+    /* Puces de filtre */
+    .puces {
+      display: flex; gap: 8px; overflow-x: auto; padding: 16px 2px 6px;
+      margin: 0 -2px; scrollbar-width: thin; -webkit-overflow-scrolling: touch;
     }
-    .barre-wrap .loupe {
-      position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
-      font-size: 17px; opacity: 0.5; pointer-events: none;
+    .puces::-webkit-scrollbar { height: 5px; }
+    .puces::-webkit-scrollbar-thumb { background: var(--coquille-fonce); border-radius: 10px; }
+    .puce {
+      flex-shrink: 0; padding: 8px 15px; border-radius: 20px; cursor: pointer;
+      background: var(--creme-carte); border: 1.5px solid var(--coquille-fonce);
+      color: var(--taupe-clair); font-size: 13px; font-weight: 600; font-family: inherit;
+      white-space: nowrap; transition: all 0.2s cubic-bezier(.2,.8,.2,1);
     }
-    .compteur { font-size: 13px; color: var(--taupe-clair); margin: 18px 6px 12px;
-      font-weight: 500; }
+    .puce:hover { transform: translateY(-1px); }
+    .puce.actif {
+      background: linear-gradient(135deg, var(--rose), var(--rose-fonce));
+      color: white; border-color: transparent;
+      box-shadow: 0 4px 12px rgba(176,111,107,0.28);
+    }
+
+    .compteur { font-size: 13px; color: var(--taupe-clair); margin: 12px 6px 12px; font-weight: 500; }
 
     .carte {
       display: flex; gap: 16px; align-items: center;
@@ -104,67 +100,69 @@
       transition: transform 0.22s cubic-bezier(.2,.8,.2,1), box-shadow 0.22s;
     }
     .carte:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(90,79,72,0.13); }
-    .vignette {
-      width: 72px; height: 72px; border-radius: 16px; object-fit: cover;
-      flex-shrink: 0; background: var(--coquille-fonce);
-    }
+    .vignette { width: 72px; height: 72px; border-radius: 16px; object-fit: cover; flex-shrink: 0; background: var(--coquille-fonce); }
     .vignette-vide {
       width: 72px; height: 72px; border-radius: 16px; flex-shrink: 0;
       background: linear-gradient(135deg, var(--coquille-fonce), var(--rose-clair));
-      display: flex; align-items: center; justify-content: center;
-      color: var(--rose-fonce); font-size: 26px;
+      display: flex; align-items: center; justify-content: center; color: var(--rose-fonce); font-size: 26px;
     }
     .infos { flex: 1; min-width: 0; }
     .nom { font-weight: 700; font-size: 16px; color: var(--taupe); line-height: 1.25; }
     .meta { margin-top: 7px; color: var(--taupe-clair); font-size: 14px; font-weight: 500; }
     .badge {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--rose), var(--rose-fonce));
-      color: white; font-weight: 600; padding: 3px 12px; border-radius: 20px;
-      font-size: 13px; box-shadow: 0 3px 8px rgba(176,111,107,0.28);
+      display: inline-block; background: linear-gradient(135deg, var(--rose), var(--rose-fonce));
+      color: white; font-weight: 600; padding: 3px 12px; border-radius: 20px; font-size: 13px;
+      box-shadow: 0 3px 8px rgba(176,111,107,0.28);
     }
     .qte { color: var(--taupe-clair); }
-    .desc { margin-top: 7px; color: var(--taupe-clair); font-size: 13px;
-      font-weight: 400; line-height: 1.4; }
+    .cat-tag { font-size: 12px; color: var(--rose-fonce); font-weight: 600; margin-top: 6px; }
+    .desc { margin-top: 5px; color: var(--taupe-clair); font-size: 13px; font-weight: 400; line-height: 1.4; }
     .vide { text-align: center; color: var(--taupe-clair); padding: 40px; font-weight: 500; }
 
     /* Plan */
     .salle-bloc { margin-bottom: 36px; }
-    .salle-titre {
-      font-size: 20px; color: var(--taupe); font-weight: 700;
-      margin: 0; display: flex; align-items: center; gap: 10px;
-    }
-    .salle-titre::before {
-      content: ""; width: 10px; height: 10px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--rose), var(--rose-fonce));
-    }
-    .salle-photo {
-      width: 100%; height: 300px; object-fit: cover; border-radius: 24px;
-      margin: 16px 0; box-shadow: 0 10px 30px rgba(90,79,72,0.15);
-      background: var(--coquille-fonce);
-    }
-    .rangements-grille {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 14px;
-    }
+    .salle-titre { font-size: 20px; color: var(--taupe); font-weight: 700; margin: 0; display: flex; align-items: center; gap: 10px; }
+    .salle-titre::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(135deg, var(--rose), var(--rose-fonce)); }
+    .salle-photo { width: 100%; height: 300px; object-fit: cover; border-radius: 24px; margin: 16px 0; box-shadow: 0 10px 30px rgba(90,79,72,0.15); background: var(--coquille-fonce); }
+
+    .rangement-bloc { margin-bottom: 14px; }
     .rangement-carte {
       background: var(--creme-carte); border-radius: 20px; overflow: hidden;
-      border: 1px solid rgba(236,227,213,0.8);
-      box-shadow: 0 6px 18px rgba(90,79,72,0.08);
-      transition: transform 0.22s cubic-bezier(.2,.8,.2,1), box-shadow 0.22s;
+      border: 1px solid rgba(236,227,213,0.8); box-shadow: 0 6px 18px rgba(90,79,72,0.08);
+      cursor: pointer; transition: transform 0.22s cubic-bezier(.2,.8,.2,1), box-shadow 0.22s;
     }
-    .rangement-carte:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(90,79,72,0.14); }
-    .rangement-carte img {
-      width: 100%; height: 120px; object-fit: cover;
-      background: var(--coquille-fonce); display: block;
+    .rangement-carte:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(90,79,72,0.13); }
+    .rangement-carte img { width: 100%; height: 150px; object-fit: cover; background: var(--coquille-fonce); display: block; }
+    .rangement-tete { padding: 13px 16px; display: flex; justify-content: space-between; align-items: center; }
+    .rangement-tete .rt-gauche { display: flex; flex-direction: column; }
+    .rc-code { font-weight: 700; color: var(--rose-fonce); font-size: 16px; }
+    .rc-desc { color: var(--taupe-clair); font-size: 13px; margin-top: 2px; font-weight: 500; }
+    .rc-count { font-size: 12px; color: var(--taupe-clair); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    .chevron { transition: transform 0.3s cubic-bezier(.2,.8,.2,1); display: inline-block; }
+    .chevron.ouvert { transform: rotate(180deg); }
+
+    .contenu-rangement {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(.2,.8,.2,1);
+      background: rgba(255,253,250,0.6); border-radius: 0 0 20px 20px;
+      margin-top: -6px;
     }
-    .rangement-carte .rc-txt { padding: 11px 13px; }
-    .rangement-carte .rc-code { font-weight: 700; color: var(--rose-fonce); font-size: 15px; }
-    .rangement-carte .rc-desc { color: var(--taupe-clair); font-size: 12px; margin-top: 3px;
-      font-weight: 500; }
+    .contenu-rangement.ouvert { max-height: 3000px; }
+    .contenu-inner { padding: 6px 14px 14px; }
+    .item-ligne {
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 12px; background: var(--creme-carte);
+      border: 1px solid rgba(236,227,213,0.7); margin-top: 8px; font-size: 14px;
+    }
+    .item-ligne .il-nom { font-weight: 600; color: var(--taupe); }
+    .item-ligne .il-empl { font-size: 12px; color: var(--taupe-clair); margin-top: 2px; }
+    .item-ligne .il-qte {
+      flex-shrink: 0; background: var(--coquille); color: var(--rose-fonce);
+      font-weight: 700; font-size: 13px; padding: 3px 11px; border-radius: 14px;
+    }
+    .item-vide { padding: 14px; text-align: center; color: var(--taupe-clair); font-size: 13px; }
 
     .cache { display: none; }
-
     @keyframes apparition { from { opacity: 0; transform: scale(0.88) translateY(-8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     @keyframes monter { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   </style>
@@ -187,6 +185,7 @@
         <span class="loupe">🔍</span>
         <input type="text" id="recherche" placeholder="Rechercher un matériel...">
       </div>
+      <div class="puces" id="puces"></div>
       <div class="compteur" id="compteur"></div>
       <div id="resultats"><div class="vide">Chargement...</div></div>
     </div>
@@ -218,6 +217,7 @@
     ];
 
     let materiels = [];
+    let categorieActive = "Tout";
 
     function photoRangement(emplacement) {
       if (!emplacement) return null;
@@ -257,14 +257,42 @@
         if (colonnes.length < 3 || !colonnes[0].trim()) continue;
         materiels.push({
           nom: colonnes[0].trim(),
-          categorie: (colonnes[1] || "").trim(),
+          categorie: (colonnes[1] || "").trim() || "Autres",
           emplacement: (colonnes[2] || "").trim(),
           quantite: (colonnes[3] || "").trim(),
           description: (colonnes[4] || "").trim()
         });
       }
-      afficher(materiels);
+      construirePuces();
+      filtrer();
       construirePlan();
+    }
+
+    function construirePuces() {
+      const cats = ["Tout", ...Array.from(new Set(materiels.map(m => m.categorie))).sort((a,b)=>a.localeCompare(b))];
+      const zone = document.getElementById("puces");
+      zone.innerHTML = "";
+      for (const cat of cats) {
+        const p = document.createElement("button");
+        p.className = "puce" + (cat === categorieActive ? " actif" : "");
+        p.textContent = cat;
+        p.onclick = function() {
+          categorieActive = cat;
+          construirePuces();
+          filtrer();
+        };
+        zone.appendChild(p);
+      }
+    }
+
+    function filtrer() {
+      const texte = document.getElementById("recherche").value.toLowerCase();
+      const resultats = materiels.filter(function(m) {
+        const okCat = (categorieActive === "Tout") || (m.categorie === categorieActive);
+        const okTexte = m.nom.toLowerCase().includes(texte);
+        return okCat && okTexte;
+      });
+      afficher(resultats);
     }
 
     function afficher(liste) {
@@ -290,11 +318,19 @@
           "<div class='infos'>" +
             "<div class='nom'>" + m.nom + "</div>" +
             "<div class='meta'>📍 <span class='badge'>" + m.emplacement + "</span> &nbsp;<span class='qte'>Qté : " + m.quantite + "</span></div>" +
+            "<div class='cat-tag'>" + m.categorie + "</div>" +
             (m.description ? "<div class='desc'>" + m.description + "</div>" : "") +
           "</div>";
         zone.appendChild(bloc);
         delai += 0.03;
       }
+    }
+
+    // Renvoie tout le matériel d'un rangement donné (ex "RNG-5")
+    function materielDuRangement(codeRng) {
+      const num = codeRng.split("-")[1];
+      const regex = new RegExp("RNG-" + num + "(\\D|$)", "i");
+      return materiels.filter(m => regex.test(m.emplacement));
     }
 
     function construirePlan() {
@@ -305,21 +341,59 @@
         bloc.className = "salle-bloc";
         let html = "<div class='salle-titre'>" + salle.nom + "</div>";
         html += "<img class='salle-photo' src='" + salle.photo + "' alt='' onerror=\"this.style.display='none'\">";
-        html += "<div class='rangements-grille'>";
         for (const r of salle.rangements) {
           const photo = "images/rng-" + r.code.split("-")[1] + EXT_PHOTO;
+          const items = materielDuRangement(r.code);
+          const idContenu = "cont-" + r.code;
+
+          let listeHtml = "";
+          if (items.length === 0) {
+            listeHtml = "<div class='item-vide'>Aucun matériel répertorié pour ce rangement.</div>";
+          } else {
+            for (const it of items) {
+              listeHtml +=
+                "<div class='item-ligne'>" +
+                  "<div>" +
+                    "<div class='il-nom'>" + it.nom + "</div>" +
+                    "<div class='il-empl'>📍 " + it.emplacement + "</div>" +
+                  "</div>" +
+                  "<div class='il-qte'>" + it.quantite + "</div>" +
+                "</div>";
+            }
+          }
+
           html +=
-            "<div class='rangement-carte'>" +
-              "<img src='" + photo + "' alt='' onerror=\"this.style.display='none'\">" +
-              "<div class='rc-txt'>" +
-                "<div class='rc-code'>" + r.code + "</div>" +
-                "<div class='rc-desc'>" + r.desc + "</div>" +
+            "<div class='rangement-bloc'>" +
+              "<div class='rangement-carte' onclick=\"basculer('" + r.code + "')\">" +
+                "<img src='" + photo + "' alt='' onerror=\"this.style.display='none'\">" +
+                "<div class='rangement-tete'>" +
+                  "<div class='rt-gauche'>" +
+                    "<span class='rc-code'>" + r.code + "</span>" +
+                    "<span class='rc-desc'>" + r.desc + "</span>" +
+                  "</div>" +
+                  "<span class='rc-count'>" + items.length + " items <span class='chevron' id='chev-" + r.code + "'>⌄</span></span>" +
+                "</div>" +
+              "</div>" +
+              "<div class='contenu-rangement' id='" + idContenu + "'>" +
+                "<div class='contenu-inner'>" + listeHtml + "</div>" +
               "</div>" +
             "</div>";
         }
-        html += "</div>";
         bloc.innerHTML = html;
         vue.appendChild(bloc);
+      }
+    }
+
+    function basculer(codeRng) {
+      const contenu = document.getElementById("cont-" + codeRng);
+      const chevron = document.getElementById("chev-" + codeRng);
+      const ouvert = contenu.classList.contains("ouvert");
+      if (ouvert) {
+        contenu.classList.remove("ouvert");
+        chevron.classList.remove("ouvert");
+      } else {
+        contenu.classList.add("ouvert");
+        chevron.classList.add("ouvert");
       }
     }
 
@@ -331,13 +405,7 @@
       document.getElementById("ong-plan").className = estRecherche ? "onglet" : "onglet actif";
     }
 
-    document.getElementById("recherche").addEventListener("input", function(e) {
-      const texte = e.target.value.toLowerCase();
-      const resultats = materiels.filter(function(m) {
-        return m.nom.toLowerCase().includes(texte);
-      });
-      afficher(resultats);
-    });
+    document.getElementById("recherche").addEventListener("input", filtrer);
 
     chargerDonnees();
   </script>
