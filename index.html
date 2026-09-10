@@ -296,7 +296,7 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
 
-    const ADMIN_UID = "948G4BRzYiNcr1pk6S6Kxqvnztq2";
+    const ADMIN_UIDS = ["948G4BRzYiNcr1pk6S6Kxqvnztq2", "X5EHAZ9YdhM5r13s34lPhdTpnY23"];
 
     const URL_MATERIEL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSusuTf5_qdC94OsMUa5r-qRswfbLh_GsmI-dXOnsZK8h2t5wctgGSE2DA8OAazDzJelUiIGO3ZJL88/pub?gid=0&single=true&output=csv";
     const URL_CRENEAUX = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS5-KLeSpLfhuKUOVOxnmphNGx36kiqguL5J3KpuUGq4GQJ14qRjPkFrZK3j4ZJpANDReGpdFDxFzc5/pub?gid=0&single=true&output=csv";
@@ -584,7 +584,7 @@
     window.deconnexionAdmin = async function() { await signOut(auth); };
 
     onAuthStateChanged(auth, (user) => {
-      estAdmin = !!(user && user.uid === ADMIN_UID);
+            estAdmin = !!(user && ADMIN_UIDS.includes(user.uid));
       const login = document.getElementById("admin-login");
       const panel = document.getElementById("admin-panel");
       const btn = document.getElementById("adm-btn");
