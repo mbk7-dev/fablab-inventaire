@@ -7,16 +7,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/dist/tabler-icons.min.css">
   <style>
     :root {
-      --coquille: #f6f0e7;
-      --coquille-fonce: #ece3d5;
-      --creme-carte: #fffdfa;
-      --rose: #c98a86;
-      --rose-clair: #e8c5c1;
-      --rose-fonce: #b06f6b;
-      --taupe: #5a4f48;
-      --taupe-clair: #8c8078;
+      --coquille: #f6f0e7; --coquille-fonce: #ece3d5; --creme-carte: #fffdfa;
+      --rose: #c98a86; --rose-clair: #e8c5c1; --rose-fonce: #b06f6b;
+      --taupe: #5a4f48; --taupe-clair: #8c8078;
+      --vert: #7ba889; --vert-fonce: #5f8a6d;
     }
     * { box-sizing: border-box; }
     body {
@@ -29,51 +26,44 @@
       background-attachment: fixed;
     }
     body::before {
-      content: ""; position: fixed; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 520px; height: 520px;
-      background: url("logo.webp") no-repeat center; background-size: contain;
+      content: ""; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 520px; height: 520px; background: url("logo.webp") no-repeat center; background-size: contain;
       opacity: 0.03; pointer-events: none; z-index: 0;
     }
     header { text-align: center; padding: 40px 16px 10px; position: relative; z-index: 1; }
-    header img.logo {
-      width: 118px; height: auto;
-      animation: apparition 0.8s cubic-bezier(.2,.8,.2,1);
-      filter: drop-shadow(0 6px 14px rgba(90,79,72,0.18));
-    }
+    header img.logo { width: 118px; height: auto; animation: apparition 0.8s cubic-bezier(.2,.8,.2,1); filter: drop-shadow(0 6px 14px rgba(90,79,72,0.18)); }
     header h1 { font-size: 27px; color: var(--taupe); margin: 16px 0 0; font-weight: 700; letter-spacing: -0.3px; }
     header .sous-titre { color: var(--rose-fonce); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; font-weight: 600; }
 
-    .onglets { display: flex; gap: 10px; max-width: 640px; margin: 26px auto 0; padding: 0 18px; position: relative; z-index: 1; }
+    .onglets { display: flex; gap: 7px; max-width: 680px; margin: 26px auto 0; padding: 0 18px; position: relative; z-index: 1; }
     .onglet {
-      flex: 1; padding: 13px; text-align: center; cursor: pointer;
-      background: var(--creme-carte); border: 1.5px solid transparent; border-radius: 18px;
-      font-weight: 600; color: var(--taupe-clair); font-size: 15px;
+      flex: 1; padding: 12px 6px; text-align: center; cursor: pointer;
+      background: var(--creme-carte); border: 1.5px solid transparent; border-radius: 16px;
+      font-weight: 600; color: var(--taupe-clair); font-size: 13.5px;
       box-shadow: 0 4px 14px rgba(90,79,72,0.07);
       transition: all 0.25s cubic-bezier(.2,.8,.2,1); font-family: inherit;
+      display: flex; align-items: center; justify-content: center; gap: 5px;
     }
+    .onglet i { font-size: 16px; }
     .onglet:hover { transform: translateY(-1px); }
     .onglet.actif { color: var(--rose-fonce); border-color: var(--rose-clair); box-shadow: 0 6px 20px rgba(201,138,134,0.18); }
+    .onglet.admin { flex: 0 0 auto; padding: 12px 13px; }
 
-    main { max-width: 640px; margin: 0 auto; padding: 22px 18px 60px; position: relative; z-index: 1; }
+    main { max-width: 680px; margin: 0 auto; padding: 22px 18px 60px; position: relative; z-index: 1; }
+    .largeur-std { max-width: 640px; margin: 0 auto; }
 
     .barre-wrap { position: relative; }
     #recherche {
       width: 100%; padding: 17px 20px 17px 50px; font-size: 16px;
       border: 1.5px solid var(--coquille-fonce); border-radius: 20px; outline: none;
       background: var(--creme-carte); color: var(--taupe); font-family: inherit;
-      box-shadow: 0 4px 16px rgba(90,79,72,0.06);
-      transition: border-color 0.25s, box-shadow 0.25s;
+      box-shadow: 0 4px 16px rgba(90,79,72,0.06); transition: border-color 0.25s, box-shadow 0.25s;
     }
     #recherche::placeholder { color: #b8ada3; }
     #recherche:focus { border-color: var(--rose); box-shadow: 0 6px 22px rgba(201,138,134,0.2); }
-    .barre-wrap .loupe { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 17px; opacity: 0.5; pointer-events: none; }
+    .barre-wrap .loupe { position: absolute; left: 17px; top: 50%; transform: translateY(-50%); font-size: 19px; color: var(--rose-fonce); opacity: 0.6; pointer-events: none; display: flex; }
 
-    /* Puces de filtre */
-    .puces {
-      display: flex; gap: 8px; overflow-x: auto; padding: 16px 2px 6px;
-      margin: 0 -2px; scrollbar-width: thin; -webkit-overflow-scrolling: touch;
-    }
+    .puces { display: flex; gap: 8px; overflow-x: auto; padding: 16px 2px 6px; margin: 0 -2px; scrollbar-width: thin; }
     .puces::-webkit-scrollbar { height: 5px; }
     .puces::-webkit-scrollbar-thumb { background: var(--coquille-fonce); border-radius: 10px; }
     .puce {
@@ -83,84 +73,119 @@
       white-space: nowrap; transition: all 0.2s cubic-bezier(.2,.8,.2,1);
     }
     .puce:hover { transform: translateY(-1px); }
-    .puce.actif {
-      background: linear-gradient(135deg, var(--rose), var(--rose-fonce));
-      color: white; border-color: transparent;
-      box-shadow: 0 4px 12px rgba(176,111,107,0.28);
-    }
+    .puce.actif { background: linear-gradient(135deg, var(--rose), var(--rose-fonce)); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(176,111,107,0.28); }
 
     .compteur { font-size: 13px; color: var(--taupe-clair); margin: 12px 6px 12px; font-weight: 500; }
 
     .carte {
-      display: flex; gap: 16px; align-items: center;
-      background: var(--creme-carte); padding: 14px 16px; margin-bottom: 13px;
-      border-radius: 22px; border: 1px solid rgba(236,227,213,0.8);
-      box-shadow: 0 6px 20px rgba(90,79,72,0.07);
+      display: flex; gap: 16px; align-items: center; background: var(--creme-carte);
+      padding: 14px 16px; margin-bottom: 13px; border-radius: 22px;
+      border: 1px solid rgba(236,227,213,0.8); box-shadow: 0 6px 20px rgba(90,79,72,0.07);
       animation: monter 0.4s cubic-bezier(.2,.8,.2,1) both;
       transition: transform 0.22s cubic-bezier(.2,.8,.2,1), box-shadow 0.22s;
     }
     .carte:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(90,79,72,0.13); }
-    .vignette { width: 72px; height: 72px; border-radius: 16px; object-fit: cover; flex-shrink: 0; background: var(--coquille-fonce); }
-    .vignette-vide {
-      width: 72px; height: 72px; border-radius: 16px; flex-shrink: 0;
-      background: linear-gradient(135deg, var(--coquille-fonce), var(--rose-clair));
-      display: flex; align-items: center; justify-content: center; color: var(--rose-fonce); font-size: 26px;
-    }
+    .pastille { width: 54px; height: 54px; border-radius: 16px; flex-shrink: 0; background: linear-gradient(135deg, var(--coquille-fonce), var(--rose-clair)); display: flex; align-items: center; justify-content: center; color: var(--rose-fonce); font-size: 25px; }
     .infos { flex: 1; min-width: 0; }
     .nom { font-weight: 700; font-size: 16px; color: var(--taupe); line-height: 1.25; }
     .meta { margin-top: 7px; color: var(--taupe-clair); font-size: 14px; font-weight: 500; }
-    .badge {
-      display: inline-block; background: linear-gradient(135deg, var(--rose), var(--rose-fonce));
-      color: white; font-weight: 600; padding: 3px 12px; border-radius: 20px; font-size: 13px;
-      box-shadow: 0 3px 8px rgba(176,111,107,0.28);
-    }
+    .badge { display: inline-block; background: linear-gradient(135deg, var(--rose), var(--rose-fonce)); color: white; font-weight: 600; padding: 3px 12px; border-radius: 20px; font-size: 13px; box-shadow: 0 3px 8px rgba(176,111,107,0.28); }
     .qte { color: var(--taupe-clair); }
     .cat-tag { font-size: 12px; color: var(--rose-fonce); font-weight: 600; margin-top: 6px; }
     .desc { margin-top: 5px; color: var(--taupe-clair); font-size: 13px; font-weight: 400; line-height: 1.4; }
     .vide { text-align: center; color: var(--taupe-clair); padding: 40px; font-weight: 500; }
 
-    /* Plan */
-    .salle-bloc { margin-bottom: 36px; }
-    .salle-titre { font-size: 20px; color: var(--taupe); font-weight: 700; margin: 0; display: flex; align-items: center; gap: 10px; }
-    .salle-titre::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(135deg, var(--rose), var(--rose-fonce)); }
-    .salle-photo { width: 100%; height: 300px; object-fit: cover; border-radius: 24px; margin: 16px 0; box-shadow: 0 10px 30px rgba(90,79,72,0.15); background: var(--coquille-fonce); }
-
-    .rangement-bloc { margin-bottom: 14px; }
-    .rangement-carte {
-      background: var(--creme-carte); border-radius: 20px; overflow: hidden;
-      border: 1px solid rgba(236,227,213,0.8); box-shadow: 0 6px 18px rgba(90,79,72,0.08);
-      cursor: pointer; transition: transform 0.22s cubic-bezier(.2,.8,.2,1), box-shadow 0.22s;
-    }
-    .rangement-carte:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(90,79,72,0.13); }
-    .rangement-carte img { width: 100%; height: 150px; object-fit: cover; background: var(--coquille-fonce); display: block; }
-    .rangement-tete { padding: 13px 16px; display: flex; justify-content: space-between; align-items: center; }
-    .rangement-tete .rt-gauche { display: flex; flex-direction: column; }
+    .salle-bloc { margin-bottom: 38px; }
+    .salle-titre { font-size: 21px; color: var(--taupe); font-weight: 700; margin: 0 0 4px; display: flex; align-items: center; gap: 11px; }
+    .salle-titre .salle-ico { width: 38px; height: 38px; border-radius: 12px; flex-shrink: 0; background: linear-gradient(135deg, var(--rose), var(--rose-fonce)); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 4px 12px rgba(176,111,107,0.25); }
+    .salle-sous { font-size: 13px; color: var(--taupe-clair); font-weight: 500; margin: 2px 0 16px 49px; }
+    .section-titre { font-size: 13px; color: var(--rose-fonce); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin: 22px 4px 12px; display: flex; align-items: center; gap: 8px; }
+    .section-titre::after { content: ""; flex: 1; height: 1.5px; background: var(--coquille-fonce); border-radius: 2px; }
+    .rangement-bloc { margin-bottom: 12px; }
+    .rangement-carte { background: var(--creme-carte); border-radius: 18px; border: 1px solid rgba(236,227,213,0.8); box-shadow: 0 4px 14px rgba(90,79,72,0.07); cursor: pointer; transition: transform 0.22s cubic-bezier(.2,.8,.2,1), box-shadow 0.22s; }
+    .rangement-carte:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(90,79,72,0.12); }
+    .rangement-tete { padding: 15px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .rt-gauche { display: flex; align-items: center; gap: 13px; min-width: 0; }
+    .rng-ico { width: 44px; height: 44px; border-radius: 13px; flex-shrink: 0; background: var(--coquille); display: flex; align-items: center; justify-content: center; color: var(--rose-fonce); font-size: 20px; }
+    .rt-txt { display: flex; flex-direction: column; min-width: 0; }
     .rc-code { font-weight: 700; color: var(--rose-fonce); font-size: 16px; }
-    .rc-desc { color: var(--taupe-clair); font-size: 13px; margin-top: 2px; font-weight: 500; }
-    .rc-count { font-size: 12px; color: var(--taupe-clair); font-weight: 600; display: flex; align-items: center; gap: 6px; }
-    .chevron { transition: transform 0.3s cubic-bezier(.2,.8,.2,1); display: inline-block; }
+    .rc-desc { color: var(--taupe-clair); font-size: 13px; margin-top: 1px; font-weight: 500; }
+    .rc-count { font-size: 12px; color: var(--taupe-clair); font-weight: 600; display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+    .chevron { transition: transform 0.3s cubic-bezier(.2,.8,.2,1); display: inline-block; font-size: 15px; }
     .chevron.ouvert { transform: rotate(180deg); }
-
-    .contenu-rangement {
-      max-height: 0; overflow: hidden;
-      transition: max-height 0.4s cubic-bezier(.2,.8,.2,1);
-      background: rgba(255,253,250,0.6); border-radius: 0 0 20px 20px;
-      margin-top: -6px;
-    }
-    .contenu-rangement.ouvert { max-height: 3000px; }
-    .contenu-inner { padding: 6px 14px 14px; }
-    .item-ligne {
-      display: flex; justify-content: space-between; align-items: center; gap: 10px;
-      padding: 10px 12px; border-radius: 12px; background: var(--creme-carte);
-      border: 1px solid rgba(236,227,213,0.7); margin-top: 8px; font-size: 14px;
-    }
-    .item-ligne .il-nom { font-weight: 600; color: var(--taupe); }
-    .item-ligne .il-empl { font-size: 12px; color: var(--taupe-clair); margin-top: 2px; }
-    .item-ligne .il-qte {
-      flex-shrink: 0; background: var(--coquille); color: var(--rose-fonce);
-      font-weight: 700; font-size: 13px; padding: 3px 11px; border-radius: 14px;
-    }
+    .contenu-rangement { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(.2,.8,.2,1); }
+    .contenu-rangement.ouvert { max-height: 4000px; }
+    .contenu-inner { padding: 4px 12px 12px; }
+    .item-ligne { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: var(--coquille); margin-top: 8px; font-size: 14px; }
+    .il-nom { font-weight: 600; color: var(--taupe); }
+    .il-empl { font-size: 12px; color: var(--taupe-clair); margin-top: 2px; }
+    .il-qte { flex-shrink: 0; background: var(--creme-carte); color: var(--rose-fonce); font-weight: 700; font-size: 13px; padding: 3px 11px; border-radius: 14px; }
     .item-vide { padding: 14px; text-align: center; color: var(--taupe-clair); font-size: 13px; }
+
+    .machine-carte { background: var(--creme-carte); border-radius: 18px; overflow: hidden; border: 1px solid rgba(236,227,213,0.8); box-shadow: 0 4px 14px rgba(90,79,72,0.07); margin-bottom: 14px; transition: transform 0.22s cubic-bezier(.2,.8,.2,1), box-shadow 0.22s; }
+    .machine-carte:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(90,79,72,0.12); }
+    .machine-photo { width: 100%; height: 190px; object-fit: cover; background: var(--coquille-fonce); display: block; }
+    .machine-corps { display: flex; gap: 15px; align-items: flex-start; padding: 16px; }
+    .machine-ico { width: 48px; height: 48px; border-radius: 14px; flex-shrink: 0; background: linear-gradient(135deg, var(--rose-clair), var(--rose)); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; }
+    .machine-nom { font-weight: 700; color: var(--taupe); font-size: 16px; }
+    .machine-type { font-size: 12px; color: var(--rose-fonce); font-weight: 600; margin-top: 2px; }
+    .machine-desc { color: var(--taupe-clair); font-size: 13px; margin-top: 6px; line-height: 1.45; }
+
+    .resa-intro { font-size: 14px; color: var(--taupe-clair); margin: 4px 4px 20px; line-height: 1.5; }
+    .semaine-bloc { margin-bottom: 30px; }
+    .semaine-titre { font-size: 16px; color: var(--taupe); font-weight: 700; margin: 0 0 12px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+    .semaine-titre .st-ico { color: var(--rose-fonce); font-size: 18px; }
+    .badge-actuelle { font-size: 10px; background: linear-gradient(135deg, var(--vert), var(--vert-fonce)); color: white; padding: 2px 9px; border-radius: 12px; font-weight: 700; letter-spacing: 0.5px; }
+    .edt-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 6px; }
+    table.edt { border-collapse: separate; border-spacing: 6px; width: 100%; min-width: 520px; }
+    table.edt th { background: var(--taupe); color: white; font-size: 12px; font-weight: 700; padding: 8px 6px; border-radius: 10px; text-align: center; white-space: nowrap; }
+    table.edt th.coin { background: transparent; }
+    table.edt td.creneau-lbl { background: var(--coquille-fonce); color: var(--taupe); font-size: 11px; font-weight: 700; padding: 8px 6px; border-radius: 10px; text-align: center; white-space: nowrap; }
+    .case { border-radius: 10px; padding: 8px 6px; text-align: center; font-size: 12px; min-height: 54px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+    .case.nc { background: repeating-linear-gradient(45deg, #f0e9dd, #f0e9dd 6px, #ece3d5 6px, #ece3d5 12px); color: #b8ada3; }
+    .case.dispo { background: #edf6f0; border: 1.5px solid #cfe6d8; cursor: pointer; transition: all 0.18s; }
+    .case.dispo:hover { background: #e0f0e7; transform: translateY(-1px); }
+    .case.dispo .cta { color: var(--vert-fonce); font-weight: 700; display: flex; align-items: center; gap: 4px; }
+    .case.complet { background: #fae9e7; border: 1.5px solid #f0cfcb; color: var(--rose-fonce); }
+    .grp-tag { background: var(--creme-carte); color: var(--rose-fonce); font-weight: 700; font-size: 10px; padding: 1px 7px; border-radius: 10px; border: 1px solid var(--rose-clair); }
+    .case-count { font-size: 10px; color: var(--taupe-clair); font-weight: 600; }
+
+    /* Admin */
+    .admin-login { max-width: 380px; margin: 20px auto; background: var(--creme-carte); border-radius: 22px; padding: 28px 24px; box-shadow: 0 8px 26px rgba(90,79,72,0.1); border: 1px solid rgba(236,227,213,0.8); }
+    .admin-login h3 { margin: 0 0 4px; color: var(--taupe); font-size: 20px; display: flex; align-items: center; gap: 8px; }
+    .admin-login .al-sous { color: var(--taupe-clair); font-size: 13px; margin-bottom: 18px; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
+    .admin-header .ah-titre { font-size: 18px; font-weight: 700; color: var(--taupe); }
+    .admin-header .ah-user { font-size: 12px; color: var(--taupe-clair); }
+    .resa-admin { background: var(--creme-carte); border-radius: 16px; padding: 14px 16px; margin-bottom: 11px; border: 1px solid rgba(236,227,213,0.8); box-shadow: 0 3px 12px rgba(90,79,72,0.06); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .ra-gauche { min-width: 0; }
+    .ra-titre { font-weight: 700; color: var(--taupe); font-size: 15px; }
+    .ra-detail { font-size: 12.5px; color: var(--taupe-clair); margin-top: 3px; line-height: 1.5; }
+    .ra-detail .ra-tag { display: inline-block; background: var(--coquille); color: var(--rose-fonce); font-weight: 700; padding: 1px 8px; border-radius: 10px; font-size: 11px; margin-right: 5px; }
+    .btn-suppr { flex-shrink: 0; background: #fae9e7; color: #c0504a; border: 1.5px solid #f0cfcb; padding: 9px 13px; border-radius: 12px; font-family: inherit; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 5px; }
+    .btn-suppr:hover { background: #f5dcd8; }
+    .champ { margin-bottom: 14px; }
+    .champ label { display: block; font-size: 13px; font-weight: 600; color: var(--taupe); margin-bottom: 5px; }
+    .champ input, .champ select { width: 100%; padding: 12px 14px; font-size: 15px; font-family: inherit; border: 1.5px solid var(--coquille-fonce); border-radius: 12px; outline: none; color: var(--taupe); background: white; transition: border-color 0.2s; }
+    .champ input:focus, .champ select:focus { border-color: var(--rose); }
+
+    .overlay { position: fixed; inset: 0; background: rgba(90,79,72,0.45); backdrop-filter: blur(3px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 18px; }
+    .overlay.actif { display: flex; }
+    .modal { background: var(--creme-carte); border-radius: 24px; padding: 26px 22px; max-width: 400px; width: 100%; box-shadow: 0 20px 60px rgba(90,79,72,0.3); animation: monter 0.3s cubic-bezier(.2,.8,.2,1); max-height: 90vh; overflow-y: auto; }
+    .modal h3 { margin: 0 0 4px; color: var(--taupe); font-size: 20px; }
+    .modal .modal-sous { color: var(--rose-fonce); font-size: 13px; font-weight: 600; margin-bottom: 18px; }
+    .champ.cache-groupe { display: none; }
+    .modal-msg { font-size: 13px; margin: 4px 0 12px; min-height: 18px; font-weight: 600; }
+    .modal-msg.erreur { color: #c0504a; }
+    .modal-msg.ok { color: var(--vert-fonce); }
+    .modal-boutons { display: flex; gap: 10px; margin-top: 6px; }
+    .btn { flex: 1; padding: 13px; border-radius: 14px; font-family: inherit; font-weight: 700; font-size: 15px; cursor: pointer; border: none; transition: all 0.2s; }
+    .btn-annuler { background: var(--coquille); color: var(--taupe-clair); }
+    .btn-annuler:hover { background: var(--coquille-fonce); }
+    .btn-valider { background: linear-gradient(135deg, var(--rose), var(--rose-fonce)); color: white; box-shadow: 0 4px 12px rgba(176,111,107,0.3); }
+    .btn-valider:hover { transform: translateY(-1px); }
+    .btn-valider:disabled { opacity: 0.6; cursor: default; transform: none; }
+    .btn-pleine { width: 100%; margin-top: 4px; }
 
     .cache { display: none; }
     @keyframes apparition { from { opacity: 0; transform: scale(0.88) translateY(-8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
@@ -175,29 +200,114 @@
   </header>
 
   <div class="onglets">
-    <div class="onglet actif" id="ong-recherche" onclick="montrer('recherche')">Recherche</div>
-    <div class="onglet" id="ong-plan" onclick="montrer('plan')">Plan du Fab Lab</div>
+    <div class="onglet actif" id="ong-recherche" onclick="montrer('recherche')"><i class="ti ti-search"></i> Recherche</div>
+    <div class="onglet" id="ong-plan" onclick="montrer('plan')"><i class="ti ti-map-2"></i> Plan</div>
+    <div class="onglet" id="ong-resa" onclick="montrer('resa')"><i class="ti ti-calendar"></i> Réservation</div>
+    <div class="onglet admin" id="ong-admin" onclick="montrer('admin')" title="Espace administrateur"><i class="ti ti-lock"></i></div>
   </div>
 
   <main>
-    <div id="vue-recherche">
+    <div id="vue-recherche" class="largeur-std">
       <div class="barre-wrap">
-        <span class="loupe">🔍</span>
+        <span class="loupe"><i class="ti ti-search"></i></span>
         <input type="text" id="recherche" placeholder="Rechercher un matériel...">
       </div>
       <div class="puces" id="puces"></div>
       <div class="compteur" id="compteur"></div>
       <div id="resultats"><div class="vide">Chargement...</div></div>
     </div>
-    <div id="vue-plan" class="cache"></div>
+
+    <div id="vue-plan" class="cache largeur-std"></div>
+
+    <div id="vue-resa" class="cache largeur-std">
+      <div class="resa-intro">
+        Réservez un créneau de 2h pour travailler au Fab Lab. Maximum 4 groupes par créneau.
+        Une réservation à venir à la fois par groupe (1A) ou par personne.
+      </div>
+      <div id="resa-contenu"><div class="vide">Chargement des créneaux...</div></div>
+    </div>
+
+    <div id="vue-admin" class="cache largeur-std">
+      <!-- écran de connexion -->
+      <div class="admin-login" id="admin-login">
+        <h3><i class="ti ti-lock"></i> Espace administrateur</h3>
+        <div class="al-sous">Réservé au responsable du Fab Lab.</div>
+        <div class="champ"><label>Email</label><input type="email" id="adm-email" placeholder="email administrateur"></div>
+        <div class="champ"><label>Mot de passe</label><input type="password" id="adm-pass" placeholder="••••••••"></div>
+        <div class="modal-msg" id="adm-msg"></div>
+        <button class="btn btn-valider btn-pleine" id="adm-btn" onclick="connexionAdmin()">Se connecter</button>
+      </div>
+      <!-- panneau admin (après connexion) -->
+      <div id="admin-panel" class="cache">
+        <div class="admin-header">
+          <div><div class="ah-titre">Réservations</div><div class="ah-user" id="adm-user"></div></div>
+          <button class="btn-suppr" onclick="deconnexionAdmin()"><i class="ti ti-logout"></i> Déconnexion</button>
+        </div>
+        <div id="admin-liste"><div class="vide">Chargement...</div></div>
+      </div>
+    </div>
   </main>
 
-  <script>
-    const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSusuTf5_qdC94OsMUa5r-qRswfbLh_GsmI-dXOnsZK8h2t5wctgGSE2DA8OAazDzJelUiIGO3ZJL88/pub?gid=0&single=true&output=csv";
-    const EXT_PHOTO = ".jpg.jpeg";
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <h3>Réserver un créneau</h3>
+      <div class="modal-sous" id="modal-creneau"></div>
+      <div class="champ"><label>Nom complet</label><input type="text" id="in-nom" placeholder="Votre nom et prénom"></div>
+      <div class="champ"><label>Email central</label><input type="email" id="in-email" placeholder="prenom.nom@centrale-casablanca.ma"></div>
+      <div class="champ">
+        <label>Niveau d'étude</label>
+        <select id="in-niveau" onchange="majGroupe()">
+          <option value="">— Choisir —</option>
+          <option value="1A">1A</option>
+          <option value="2A">2A</option>
+          <option value="3A">3A</option>
+          <option value="Bachelor 1">Bachelor 1</option>
+          <option value="Bachelor 2">Bachelor 2</option>
+          <option value="Bachelor 3">Bachelor 3</option>
+          <option value="Bachelor 4">Bachelor 4</option>
+        </select>
+      </div>
+      <div class="champ cache-groupe" id="champ-groupe">
+        <label>Numéro de groupe PLBD</label>
+        <input type="number" id="in-groupe" placeholder="Ex : 17" min="1">
+      </div>
+      <div class="modal-msg" id="modal-msg"></div>
+      <div class="modal-boutons">
+        <button class="btn btn-annuler" onclick="fermerModal()">Annuler</button>
+        <button class="btn btn-valider" id="btn-valider" onclick="validerResa()">Confirmer</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, getDocs, runTransaction, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhR-FBuo0__hHDj2gRDNYHoLn2WRB-j-E",
+      authDomain: "fablab-reservation-5ecc0.firebaseapp.com",
+      projectId: "fablab-reservation-5ecc0",
+      storageBucket: "fablab-reservation-5ecc0.firebasestorage.app",
+      messagingSenderId: "669568222414",
+      appId: "1:669568222414:web:7421a10f1bafeb04b4fc9f"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    const ADMIN_UID = "948G4BRzYiNcr1pk6S6Kxqvnztq2";
+
+    const URL_MATERIEL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSusuTf5_qdC94OsMUa5r-qRswfbLh_GsmI-dXOnsZK8h2t5wctgGSE2DA8OAazDzJelUiIGO3ZJL88/pub?gid=0&single=true&output=csv";
+    const URL_CRENEAUX = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS5-KLeSpLfhuKUOVOxnmphNGx36kiqguL5J3KpuUGq4GQJ14qRjPkFrZK3j4ZJpANDReGpdFDxFzc5/pub?gid=0&single=true&output=csv";
+
+    const MAX_GROUPES = 4;
+    const MAX_RESA_SEMAINE = 4;
+    const CRENEAUX_ORDRE = ["08h30-10h15", "10h30-12h15", "14h00-15h45", "16h00-17h45"];
+    const JOURS = ["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
 
     const SALLES = [
-      { nom: "Salle Prototypage", photo: "images/salle-prototypage" + EXT_PHOTO,
+      { nom: "Salle Prototypage", ico: "🔬", sous: "Postes de travail et instrumentation",
         rangements: [
           { code: "RNG-1", desc: "Instrumentation scientifique" },
           { code: "RNG-2", desc: "Outils scientifiques" },
@@ -205,209 +315,353 @@
           { code: "RNG-4", desc: "Matériel de laboratoire" },
           { code: "RNG-5", desc: "Composants et capteurs" },
           { code: "RNG-6", desc: "Composants et capteurs" }
-        ] },
-      { nom: "Salle Machine", photo: "images/salle-machine" + EXT_PHOTO,
+        ], machines: [] },
+      { nom: "Salle Machine", ico: "⚙️", sous: "Fabrication numérique et outillage",
         rangements: [
           { code: "RNG-7", desc: "Kits Arduino, perceuse/visseuse" },
           { code: "RNG-8", desc: "Outillage" },
           { code: "RNG-9", desc: "Anciens kits de robots" },
           { code: "RNG-10", desc: "Anciens kits de robots" },
           { code: "RNG-11", desc: "Filaments imprimantes 3D" }
+        ],
+        machines: [
+          { nom: "Bambulab", type: "Imprimante 3D FDM", ico: "🖨️", photo: "images/bambulab.jpg", desc: "Imprimante 3D rapide multi-matériaux à haute précision, idéale pour les pièces techniques et le prototypage exigeant." },
+          { nom: "Ultimaker 3", type: "Imprimante 3D FDM", ico: "🖨️", photo: "images/ultimaker.webp", desc: "Imprimante double extrusion fiable, permettant l'impression de supports solubles pour des géométries complexes." },
+          { nom: "FlashForge Creator Pro", type: "Imprimante 3D FDM", ico: "🖨️", photo: "images/flashforge.png", desc: "Imprimante à double extrudeur en enceinte fermée, adaptée à l'ABS et aux impressions bi-matières." },
+          { nom: "Makeblock mCreate 2.0", type: "Imprimante 3D FDM", ico: "🖨️", photo: "images/makeblock.webp", desc: "Imprimante 3D robuste avec plateau de découpe laser optionnel, adaptée à l'enseignement et aux projets pédagogiques." },
+          { nom: "Elegoo Jupiter SE", type: "Imprimante 3D résine (LCD)", ico: "💧", photo: "images/elegoo.webp", desc: "Imprimante résine grand format à très haute résolution, pour les pièces fines et détaillées." },
+          { nom: "Découpe laser", type: "Machine de découpe", ico: "🔺", photo: "images/decoupe-laser.jpg", desc: "Machine de découpe et gravure laser pour le bois, l'acrylique et divers matériaux plans." }
         ] }
     ];
 
     let materiels = [];
     let categorieActive = "Tout";
-
-    function photoRangement(emplacement) {
-      if (!emplacement) return null;
-      const m = emplacement.match(/RNG-(\d+)/i);
-      if (!m) return null;
-      return "images/rng-" + m[1] + EXT_PHOTO;
-    }
+    let creneaux = [];
+    let reservations = [];       // {..., _id: docId}
+    let resaCourante = null;
+    let estAdmin = false;
 
     function parserCSV(texte) {
       const lignes = [];
-      let ligne = [], champ = "", dansGuillemets = false;
+      let ligne = [], champ = "", dansG = false;
       for (let i = 0; i < texte.length; i++) {
         const c = texte[i];
-        if (dansGuillemets) {
+        if (dansG) {
           if (c === '"' && texte[i+1] === '"') { champ += '"'; i++; }
-          else if (c === '"') { dansGuillemets = false; }
+          else if (c === '"') { dansG = false; }
           else { champ += c; }
         } else {
-          if (c === '"') { dansGuillemets = true; }
+          if (c === '"') { dansG = true; }
           else if (c === ',') { ligne.push(champ); champ = ""; }
-          else if (c === '\n' || c === '\r') {
-            if (c === '\r' && texte[i+1] === '\n') i++;
-            ligne.push(champ); lignes.push(ligne); ligne = []; champ = "";
-          } else { champ += c; }
+          else if (c === '\n' || c === '\r') { if (c === '\r' && texte[i+1] === '\n') i++; ligne.push(champ); lignes.push(ligne); ligne = []; champ = ""; }
+          else { champ += c; }
         }
       }
       if (champ !== "" || ligne.length > 0) { ligne.push(champ); lignes.push(ligne); }
       return lignes;
     }
 
-    async function chargerDonnees() {
-      const reponse = await fetch(URL_CSV);
-      const texteCSV = await reponse.text();
-      const lignes = parserCSV(texteCSV);
+    function auj0() { const d = new Date(); d.setHours(0,0,0,0); return d; }
+    function dateObj(dateStr) { return new Date(dateStr + "T00:00:00"); }
+    function numSemaine(dateStr) {
+      const d = dateObj(dateStr);
+      const jeudi = new Date(d); jeudi.setDate(d.getDate() + 3 - ((d.getDay() + 6) % 7));
+      const debutAnnee = new Date(jeudi.getFullYear(), 0, 1);
+      const sem = Math.ceil((((jeudi - debutAnnee) / 86400000) + 1) / 7);
+      return jeudi.getFullYear() + "-S" + String(sem).padStart(2, "0");
+    }
+    function libelleJour(dateStr) { return JOURS[(dateObj(dateStr).getDay() + 6) % 7]; }
+    function dateFr(dateStr) { return dateObj(dateStr).toLocaleDateString("fr-FR", { day: "numeric", month: "long" }); }
+    function prenomDe(nom) { return (nom || "").trim().split(/\s+/)[0] || nom; }
+    function identiteResa(r) { if (r.niveau === "1A" && r.groupe) return "grp-" + r.groupe; return "email-" + (r.email || "").toLowerCase(); }
+    function libelleResa(r) { if (r.niveau === "1A" && r.groupe) return "PLBD-" + r.groupe; return (r.niveau || "?") + " · " + prenomDe(r.nom); }
+
+    async function chargerMateriel() {
+      const rep = await fetch(URL_MATERIEL);
+      const lignes = parserCSV(await rep.text());
       for (let i = 1; i < lignes.length; i++) {
-        const colonnes = lignes[i];
-        if (colonnes.length < 3 || !colonnes[0].trim()) continue;
-        materiels.push({
-          nom: colonnes[0].trim(),
-          categorie: (colonnes[1] || "").trim() || "Autres",
-          emplacement: (colonnes[2] || "").trim(),
-          quantite: (colonnes[3] || "").trim(),
-          description: (colonnes[4] || "").trim()
-        });
+        const c = lignes[i];
+        if (c.length < 3 || !c[0].trim()) continue;
+        materiels.push({ nom: c[0].trim(), categorie: (c[1]||"").trim()||"Autres", emplacement: (c[2]||"").trim(), quantite: (c[3]||"").trim(), description: (c[4]||"").trim() });
       }
-      construirePuces();
-      filtrer();
-      construirePlan();
+      construirePuces(); filtrer(); construirePlan();
+    }
+    async function chargerCreneaux() {
+      const rep = await fetch(URL_CRENEAUX);
+      const lignes = parserCSV(await rep.text());
+      creneaux = [];
+      const auj = auj0();
+      for (let i = 1; i < lignes.length; i++) {
+        const c = lignes[i];
+        if (c.length < 3 || !c[0].trim()) continue;
+        const ouvert = (c[2]||"").trim().toLowerCase();
+        const date = c[0].trim();
+        if ((ouvert === "oui" || ouvert === "yes" || ouvert === "1") && dateObj(date) >= auj) creneaux.push({ date, creneau: c[1].trim() });
+      }
+    }
+    async function chargerReservations() {
+      const snap = await getDocs(collection(db, "reservations"));
+      reservations = []; snap.forEach(d => reservations.push({ ...d.data(), _id: d.id }));
     }
 
     function construirePuces() {
       const cats = ["Tout", ...Array.from(new Set(materiels.map(m => m.categorie))).sort((a,b)=>a.localeCompare(b))];
-      const zone = document.getElementById("puces");
-      zone.innerHTML = "";
+      const zone = document.getElementById("puces"); zone.innerHTML = "";
       for (const cat of cats) {
         const p = document.createElement("button");
         p.className = "puce" + (cat === categorieActive ? " actif" : "");
         p.textContent = cat;
-        p.onclick = function() {
-          categorieActive = cat;
-          construirePuces();
-          filtrer();
-        };
+        p.onclick = () => { categorieActive = cat; construirePuces(); filtrer(); };
         zone.appendChild(p);
       }
     }
-
     function filtrer() {
       const texte = document.getElementById("recherche").value.toLowerCase();
-      const resultats = materiels.filter(function(m) {
-        const okCat = (categorieActive === "Tout") || (m.categorie === categorieActive);
-        const okTexte = m.nom.toLowerCase().includes(texte);
-        return okCat && okTexte;
-      });
-      afficher(resultats);
+      const res = materiels.filter(m => ((categorieActive==="Tout")||(m.categorie===categorieActive)) && m.nom.toLowerCase().includes(texte));
+      afficher(res);
     }
-
     function afficher(liste) {
       const zone = document.getElementById("resultats");
-      const compteur = document.getElementById("compteur");
+      document.getElementById("compteur").textContent = liste.length + " matériel(s)";
       zone.innerHTML = "";
-      compteur.textContent = liste.length + " matériel(s)";
-      if (liste.length === 0) {
-        zone.innerHTML = "<div class='vide'>Aucun résultat trouvé.</div>";
-        return;
-      }
+      if (liste.length === 0) { zone.innerHTML = "<div class='vide'>Aucun résultat trouvé.</div>"; return; }
       let delai = 0;
       for (const m of liste) {
-        const bloc = document.createElement("div");
-        bloc.className = "carte";
-        bloc.style.animationDelay = delai + "s";
-        const photo = photoRangement(m.emplacement);
-        const vign = photo
-          ? "<img class='vignette' src='" + photo + "' alt='' onerror=\"this.outerHTML='<div class=\\'vignette-vide\\'>📷</div>'\">"
-          : "<div class='vignette-vide'>📍</div>";
-        bloc.innerHTML =
-          vign +
-          "<div class='infos'>" +
-            "<div class='nom'>" + m.nom + "</div>" +
-            "<div class='meta'>📍 <span class='badge'>" + m.emplacement + "</span> &nbsp;<span class='qte'>Qté : " + m.quantite + "</span></div>" +
-            "<div class='cat-tag'>" + m.categorie + "</div>" +
-            (m.description ? "<div class='desc'>" + m.description + "</div>" : "") +
-          "</div>";
-        zone.appendChild(bloc);
-        delai += 0.03;
+        const b = document.createElement("div");
+        b.className = "carte"; b.style.animationDelay = delai + "s";
+        b.innerHTML = "<div class='pastille'>📦</div><div class='infos'><div class='nom'>" + m.nom + "</div><div class='meta'>📍 <span class='badge'>" + m.emplacement + "</span> &nbsp;<span class='qte'>Qté : " + m.quantite + "</span></div><div class='cat-tag'>" + m.categorie + "</div>" + (m.description ? "<div class='desc'>" + m.description + "</div>" : "") + "</div>";
+        zone.appendChild(b); delai += 0.03;
       }
     }
 
-    // Renvoie tout le matériel d'un rangement donné (ex "RNG-5")
     function materielDuRangement(codeRng) {
       const num = codeRng.split("-")[1];
       const regex = new RegExp("RNG-" + num + "(\\D|$)", "i");
       return materiels.filter(m => regex.test(m.emplacement));
     }
-
     function construirePlan() {
-      const vue = document.getElementById("vue-plan");
-      vue.innerHTML = "";
+      const vue = document.getElementById("vue-plan"); vue.innerHTML = "";
       for (const salle of SALLES) {
-        const bloc = document.createElement("div");
-        bloc.className = "salle-bloc";
-        let html = "<div class='salle-titre'>" + salle.nom + "</div>";
-        html += "<img class='salle-photo' src='" + salle.photo + "' alt='' onerror=\"this.style.display='none'\">";
+        const bloc = document.createElement("div"); bloc.className = "salle-bloc";
+        let html = "<div class='salle-titre'><span class='salle-ico'>" + salle.ico + "</span>" + salle.nom + "</div><div class='salle-sous'>" + salle.sous + "</div>";
+        html += "<div class='section-titre'>Rangements</div>";
         for (const r of salle.rangements) {
-          const photo = "images/rng-" + r.code.split("-")[1] + EXT_PHOTO;
           const items = materielDuRangement(r.code);
-          const idContenu = "cont-" + r.code;
-
-          let listeHtml = "";
-          if (items.length === 0) {
-            listeHtml = "<div class='item-vide'>Aucun matériel répertorié pour ce rangement.</div>";
-          } else {
-            for (const it of items) {
-              listeHtml +=
-                "<div class='item-ligne'>" +
-                  "<div>" +
-                    "<div class='il-nom'>" + it.nom + "</div>" +
-                    "<div class='il-empl'>📍 " + it.emplacement + "</div>" +
-                  "</div>" +
-                  "<div class='il-qte'>" + it.quantite + "</div>" +
-                "</div>";
-            }
-          }
-
-          html +=
-            "<div class='rangement-bloc'>" +
-              "<div class='rangement-carte' onclick=\"basculer('" + r.code + "')\">" +
-                "<img src='" + photo + "' alt='' onerror=\"this.style.display='none'\">" +
-                "<div class='rangement-tete'>" +
-                  "<div class='rt-gauche'>" +
-                    "<span class='rc-code'>" + r.code + "</span>" +
-                    "<span class='rc-desc'>" + r.desc + "</span>" +
-                  "</div>" +
-                  "<span class='rc-count'>" + items.length + " items <span class='chevron' id='chev-" + r.code + "'>⌄</span></span>" +
-                "</div>" +
-              "</div>" +
-              "<div class='contenu-rangement' id='" + idContenu + "'>" +
-                "<div class='contenu-inner'>" + listeHtml + "</div>" +
-              "</div>" +
-            "</div>";
+          let l = "";
+          if (items.length === 0) l = "<div class='item-vide'>Aucun matériel répertorié pour ce rangement.</div>";
+          else for (const it of items) l += "<div class='item-ligne'><div><div class='il-nom'>" + it.nom + "</div><div class='il-empl'>📍 " + it.emplacement + "</div></div><div class='il-qte'>" + it.quantite + "</div></div>";
+          html += "<div class='rangement-bloc'><div class='rangement-carte' onclick=\"basculer('" + r.code + "')\"><div class='rangement-tete'><div class='rt-gauche'><span class='rng-ico'>🗄️</span><span class='rt-txt'><span class='rc-code'>" + r.code + "</span><span class='rc-desc'>" + r.desc + "</span></span></div><span class='rc-count'>" + items.length + " items <span class='chevron' id='chev-" + r.code + "'>⌄</span></span></div></div><div class='contenu-rangement' id='cont-" + r.code + "'><div class='contenu-inner'>" + l + "</div></div></div>";
         }
-        bloc.innerHTML = html;
-        vue.appendChild(bloc);
+        if (salle.machines && salle.machines.length) {
+          html += "<div class='section-titre'>Machines &amp; équipements</div>";
+          for (const mac of salle.machines) html += "<div class='machine-carte'><img class='machine-photo' src='" + mac.photo + "' alt='' onerror=\"this.style.display='none'\"><div class='machine-corps'><div class='machine-ico'>" + mac.ico + "</div><div><div class='machine-nom'>" + mac.nom + "</div><div class='machine-type'>" + mac.type + "</div><div class='machine-desc'>" + mac.desc + "</div></div></div></div>";
+        }
+        bloc.innerHTML = html; vue.appendChild(bloc);
       }
     }
 
-    function basculer(codeRng) {
-      const contenu = document.getElementById("cont-" + codeRng);
-      const chevron = document.getElementById("chev-" + codeRng);
-      const ouvert = contenu.classList.contains("ouvert");
-      if (ouvert) {
-        contenu.classList.remove("ouvert");
-        chevron.classList.remove("ouvert");
+    function resasDuCreneau(date, creneau) { return reservations.filter(r => r.date === date && r.creneau === creneau); }
+
+    function construireResa() {
+      const zone = document.getElementById("resa-contenu");
+      if (creneaux.length === 0) { zone.innerHTML = "<div class='vide'>Aucun créneau disponible pour le moment.</div>"; return; }
+      const semActuelle = numSemaine(auj0().toISOString().slice(0,10));
+      const parSemaine = {};
+      for (const c of creneaux) { const s = numSemaine(c.date); if (!parSemaine[s]) parSemaine[s] = []; parSemaine[s].push(c); }
+      const semainesTriees = Object.keys(parSemaine).sort();
+      let html = "";
+      for (const sem of semainesTriees) {
+        const cres = parSemaine[sem];
+        const dates = Array.from(new Set(cres.map(c => c.date))).sort();
+        const estActuelle = (sem === semActuelle);
+        html += "<div class='semaine-bloc'>";
+        html += "<div class='semaine-titre'><i class='ti ti-calendar-week st-ico'></i> Semaine du " + dateFr(dates[0]) + " au " + dateFr(dates[dates.length-1]) + (estActuelle ? " <span class='badge-actuelle'>Cette semaine</span>" : "") + "</div>";
+        html += "<div class='edt-scroll'><table class='edt'>";
+        html += "<tr><th class='coin'></th>";
+        for (const d of dates) html += "<th>" + libelleJour(d) + "<br><span style='font-weight:500;opacity:.8'>" + dateFr(d) + "</span></th>";
+        html += "</tr>";
+        for (const cr of CRENEAUX_ORDRE) {
+          html += "<tr><td class='creneau-lbl'>" + cr + "</td>";
+          for (const d of dates) {
+            const existe = cres.some(c => c.date === d && c.creneau === cr);
+            if (!existe) { html += "<td><div class='case nc'>—</div></td>"; continue; }
+            const rs = resasDuCreneau(d, cr);
+            const tags = rs.map(r => "<span class='grp-tag'>" + libelleResa(r) + "</span>").join(" ");
+            if (rs.length >= MAX_GROUPES) html += "<td><div class='case complet'><div style='font-weight:700'>Complet</div>" + tags + "</div></td>";
+            else html += "<td><div class='case dispo' onclick=\"ouvrirModal('" + d + "','" + cr + "')\">" + (tags||"") + "<span class='cta'><i class='ti ti-plus'></i>Réserver</span><span class='case-count'>" + rs.length + "/" + MAX_GROUPES + "</span></div></td>";
+          }
+          html += "</tr>";
+        }
+        html += "</table></div></div>";
+      }
+      zone.innerHTML = html;
+    }
+
+    window.majGroupe = function() {
+      const niveau = document.getElementById("in-niveau").value;
+      document.getElementById("champ-groupe").style.display = (niveau === "1A") ? "block" : "none";
+    };
+    window.ouvrirModal = function(date, creneau) {
+      resaCourante = { date, creneau };
+      document.getElementById("modal-creneau").textContent = libelleJour(date) + " " + dateFr(date) + " · " + creneau;
+      document.getElementById("in-nom").value = "";
+      document.getElementById("in-email").value = "";
+      document.getElementById("in-niveau").value = "";
+      document.getElementById("in-groupe").value = "";
+      document.getElementById("champ-groupe").style.display = "none";
+      const msg = document.getElementById("modal-msg"); msg.textContent = ""; msg.className = "modal-msg";
+      document.getElementById("btn-valider").disabled = false;
+      document.getElementById("overlay").classList.add("actif");
+    };
+    window.fermerModal = function() { document.getElementById("overlay").classList.remove("actif"); resaCourante = null; };
+
+    window.validerResa = async function() {
+      const nom = document.getElementById("in-nom").value.trim();
+      const email = document.getElementById("in-email").value.trim().toLowerCase();
+      const niveau = document.getElementById("in-niveau").value;
+      const groupeStr = document.getElementById("in-groupe").value.trim();
+      const msg = document.getElementById("modal-msg");
+      const btn = document.getElementById("btn-valider");
+      msg.className = "modal-msg erreur";
+      if (!nom || nom.length < 3) { msg.textContent = "Merci d'indiquer votre nom complet."; return; }
+      const emailOk = /^[a-z]+([._][a-z]+)*@centrale-casablanca\.ma$/.test(email);
+      if (!emailOk) { msg.textContent = "Email central invalide (prenom.nom@centrale-casablanca.ma)."; return; }
+      if (!niveau) { msg.textContent = "Merci de choisir votre niveau d'étude."; return; }
+      let groupe = null;
+      if (niveau === "1A") { groupe = parseInt(groupeStr, 10); if (!groupe || groupe < 1) { msg.textContent = "Numéro de groupe PLBD invalide."; return; } }
+
+      const { date, creneau } = resaCourante;
+      const semaineCible = numSemaine(date);
+      const auj = auj0();
+      const nouvelle = { date, creneau, niveau, groupe, nom, email, cree: new Date().toISOString() };
+      const identNouv = identiteResa(nouvelle);
+      btn.disabled = true; msg.className = "modal-msg"; msg.textContent = "Enregistrement...";
+
+      try {
+        await runTransaction(db, async (tx) => {
+          const snap = await getDocs(collection(db, "reservations"));
+          const toutes = []; snap.forEach(d => toutes.push(d.data()));
+          const duCreneau = toutes.filter(r => r.date === date && r.creneau === creneau);
+          if (duCreneau.length >= MAX_GROUPES) throw new Error("COMPLET");
+          if (duCreneau.some(r => identiteResa(r) === identNouv)) throw new Error("DEJA_CE_CRENEAU");
+          const aVenir = toutes.filter(r => identiteResa(r) === identNouv && dateObj(r.date) >= auj);
+          if (aVenir.length > 0) throw new Error("DEJA_ACTIVE");
+          const memeSemaine = toutes.filter(r => identiteResa(r) === identNouv && numSemaine(r.date) === semaineCible);
+          if (memeSemaine.length >= MAX_RESA_SEMAINE) throw new Error("MAX_SEMAINE");
+          const ref = doc(collection(db, "reservations"));
+          tx.set(ref, nouvelle);
+        });
+        msg.className = "modal-msg ok"; msg.textContent = "Réservation confirmée !";
+        await chargerReservations(); construireResa();
+        setTimeout(fermerModal, 1200);
+      } catch (e) {
+        msg.className = "modal-msg erreur";
+        const messages = { "COMPLET": "Ce créneau est complet (4 groupes).", "DEJA_CE_CRENEAU": "Vous avez déjà réservé ce créneau.", "DEJA_ACTIVE": "Vous avez déjà une réservation à venir. Attendez qu'elle soit passée.", "MAX_SEMAINE": "Limite de réservations atteinte pour cette semaine." };
+        msg.textContent = messages[e.message] || "Erreur, réessayez.";
+        btn.disabled = false;
+        await chargerReservations(); construireResa();
+      }
+    };
+
+    // ---------- ADMIN ----------
+    window.connexionAdmin = async function() {
+      const email = document.getElementById("adm-email").value.trim();
+      const pass = document.getElementById("adm-pass").value;
+      const msg = document.getElementById("adm-msg");
+      const btn = document.getElementById("adm-btn");
+      msg.className = "modal-msg erreur";
+      if (!email || !pass) { msg.textContent = "Renseignez email et mot de passe."; return; }
+      btn.disabled = true; msg.className = "modal-msg"; msg.textContent = "Connexion...";
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        // onAuthStateChanged prend le relais
+      } catch (e) {
+        msg.className = "modal-msg erreur";
+        msg.textContent = "Email ou mot de passe incorrect.";
+        btn.disabled = false;
+      }
+    };
+    window.deconnexionAdmin = async function() { await signOut(auth); };
+
+    onAuthStateChanged(auth, (user) => {
+      estAdmin = !!(user && user.uid === ADMIN_UID);
+      const login = document.getElementById("admin-login");
+      const panel = document.getElementById("admin-panel");
+      const btn = document.getElementById("adm-btn");
+      if (estAdmin) {
+        login.classList.add("cache"); panel.classList.remove("cache");
+        document.getElementById("adm-user").textContent = "Connecté : " + user.email;
+        afficherAdmin();
       } else {
-        contenu.classList.add("ouvert");
-        chevron.classList.add("ouvert");
+        login.classList.remove("cache"); panel.classList.add("cache");
+        if (btn) btn.disabled = false;
+        const msg = document.getElementById("adm-msg");
+        if (user && user.uid !== ADMIN_UID) { msg.className = "modal-msg erreur"; msg.textContent = "Ce compte n'a pas les droits administrateur."; signOut(auth); }
       }
+    });
+
+    async function afficherAdmin() {
+      await chargerReservations();
+      const zone = document.getElementById("admin-liste");
+      const auj = auj0();
+      // trier : à venir d'abord, par date puis créneau
+      const triees = [...reservations].sort((a,b) => (a.date+a.creneau).localeCompare(b.date+b.creneau));
+      if (triees.length === 0) { zone.innerHTML = "<div class='vide'>Aucune réservation enregistrée.</div>"; return; }
+      let html = "";
+      for (const r of triees) {
+        const passe = dateObj(r.date) < auj;
+        html +=
+          "<div class='resa-admin' style='" + (passe ? "opacity:.55" : "") + "'>" +
+            "<div class='ra-gauche'>" +
+              "<div class='ra-titre'>" + libelleResa(r) + (passe ? " · passée" : "") + "</div>" +
+              "<div class='ra-detail'>" +
+                "<span class='ra-tag'>" + libelleJour(r.date) + " " + dateFr(r.date) + "</span>" +
+                "<span class='ra-tag'>" + r.creneau + "</span><br>" +
+                r.nom + " · " + r.email +
+              "</div>" +
+            "</div>" +
+            "<button class='btn-suppr' onclick=\"supprimerResa('" + r._id + "')\"><i class='ti ti-trash'></i> Annuler</button>" +
+          "</div>";
+      }
+      zone.innerHTML = html;
     }
 
-    function montrer(vue) {
-      const estRecherche = (vue === "recherche");
-      document.getElementById("vue-recherche").className = estRecherche ? "" : "cache";
-      document.getElementById("vue-plan").className = estRecherche ? "cache" : "";
-      document.getElementById("ong-recherche").className = estRecherche ? "onglet actif" : "onglet";
-      document.getElementById("ong-plan").className = estRecherche ? "onglet" : "onglet actif";
-    }
+    window.supprimerResa = async function(id) {
+      if (!estAdmin) return;
+      if (!confirm("Annuler définitivement cette réservation ?")) return;
+      try {
+        await deleteDoc(doc(db, "reservations", id));
+        await afficherAdmin();
+        await chargerReservations(); construireResa();
+      } catch (e) {
+        alert("Erreur lors de l'annulation. Vérifiez votre connexion.");
+      }
+    };
+
+    // ---------- NAVIGATION ----------
+    window.basculer = function(codeRng) {
+      const c = document.getElementById("cont-" + codeRng);
+      const ch = document.getElementById("chev-" + codeRng);
+      if (c.classList.contains("ouvert")) { c.classList.remove("ouvert"); ch.classList.remove("ouvert"); }
+      else { c.classList.add("ouvert"); ch.classList.add("ouvert"); }
+    };
+    window.montrer = function(vue) {
+      const v = ["recherche","plan","resa","admin"];
+      for (const x of v) {
+        document.getElementById("vue-" + x).className = (x === vue ? "" : "cache") + " largeur-std";
+        document.getElementById("ong-" + x).className = "onglet" + (x === "admin" ? " admin" : "") + (x === vue ? " actif" : "");
+      }
+    };
 
     document.getElementById("recherche").addEventListener("input", filtrer);
 
-    chargerDonnees();
+    async function demarrer() {
+      await chargerMateriel();
+      await chargerCreneaux();
+      await chargerReservations();
+      construireResa();
+    }
+    demarrer();
   </script>
 </body>
 </html>
