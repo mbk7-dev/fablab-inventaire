@@ -27,8 +27,8 @@
     }
     body::before {
       content: ""; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 1080px; height: 720px; background: url("ecc.jpeg") no-repeat center; background-size: contain;
-      opacity: 0.08; pointer-events: none; z-index: 0;
+      width: 520px; height: 520px; background: url("logo.webp") no-repeat center; background-size: contain;
+      opacity: 0.03; pointer-events: none; z-index: 0;
     }
     header { text-align: center; padding: 40px 16px 10px; position: relative; z-index: 1; }
     header img.logo { width: 118px; height: auto; animation: apparition 0.8s cubic-bezier(.2,.8,.2,1); filter: drop-shadow(0 6px 14px rgba(90,79,72,0.18)); }
@@ -147,10 +147,10 @@
     .case.dispo:hover { background: #e0f0e7; transform: translateY(-1px); }
     .case.dispo .cta { color: var(--vert-fonce); font-weight: 700; display: flex; align-items: center; gap: 4px; }
     .case.complet { background: #fae9e7; border: 1.5px solid #f0cfcb; color: var(--rose-fonce); }
+    .case.trop-tard { background: #f0ece4; border: 1.5px dashed #d9cdb9; color: #a89880; cursor: default; }
     .grp-tag { background: var(--creme-carte); color: var(--rose-fonce); font-weight: 700; font-size: 10px; padding: 1px 7px; border-radius: 10px; border: 1px solid var(--rose-clair); }
     .case-count { font-size: 10px; color: var(--taupe-clair); font-weight: 600; }
 
-    /* Admin */
     .admin-login { max-width: 380px; margin: 20px auto; background: var(--creme-carte); border-radius: 22px; padding: 28px 24px; box-shadow: 0 8px 26px rgba(90,79,72,0.1); border: 1px solid rgba(236,227,213,0.8); }
     .admin-login h3 { margin: 0 0 4px; color: var(--taupe); font-size: 20px; display: flex; align-items: center; gap: 8px; }
     .admin-login .al-sous { color: var(--taupe-clair); font-size: 13px; margin-bottom: 18px; }
@@ -169,6 +169,12 @@
     .champ input, .champ select { width: 100%; padding: 12px 14px; font-size: 15px; font-family: inherit; border: 1.5px solid var(--coquille-fonce); border-radius: 12px; outline: none; color: var(--taupe); background: white; transition: border-color 0.2s; }
     .champ input:focus, .champ select:focus { border-color: var(--rose); }
 
+    .duree-choix { display: flex; gap: 10px; margin-bottom: 14px; }
+    .duree-opt { flex: 1; padding: 12px; border-radius: 12px; border: 1.5px solid var(--coquille-fonce); background: white; text-align: center; cursor: pointer; font-weight: 700; font-size: 14px; color: var(--taupe-clair); transition: all 0.18s; font-family: inherit; }
+    .duree-opt.actif { border-color: var(--rose); background: linear-gradient(135deg, var(--rose), var(--rose-fonce)); color: white; box-shadow: 0 4px 12px rgba(176,111,107,0.25); }
+    .duree-opt .do-h { font-size: 12px; font-weight: 600; opacity: 0.85; margin-top: 2px; }
+    .duree-opt:disabled { opacity: 0.4; cursor: default; }
+
     .overlay { position: fixed; inset: 0; background: rgba(90,79,72,0.45); backdrop-filter: blur(3px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 18px; }
     .overlay.actif { display: flex; }
     .modal { background: var(--creme-carte); border-radius: 24px; padding: 26px 22px; max-width: 400px; width: 100%; box-shadow: 0 20px 60px rgba(90,79,72,0.3); animation: monter 0.3s cubic-bezier(.2,.8,.2,1); max-height: 90vh; overflow-y: auto; }
@@ -185,7 +191,7 @@
     .btn-valider { background: linear-gradient(135deg, var(--rose), var(--rose-fonce)); color: white; box-shadow: 0 4px 12px rgba(176,111,107,0.3); }
     .btn-valider:hover { transform: translateY(-1px); }
     .btn-valider:disabled { opacity: 0.6; cursor: default; transform: none; }
-    .btn-pleine { width: 100%; margin-top: 4px; }
+    .btn-pleine { width: 100%; margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 7px; }
 
     .cache { display: none; }
     @keyframes apparition { from { opacity: 0; transform: scale(0.88) translateY(-8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
@@ -194,7 +200,7 @@
 </head>
 <body>
   <header>
-    <img class="logo" src="log.png" alt="Centrale Casablanca">
+    <img class="logo" src="logo.webp" alt="Centrale Casablanca">
     <h1>Inventaire du Fab Lab</h1>
     <div class="sous-titre">Centrale Casablanca</div>
   </header>
@@ -221,14 +227,13 @@
 
     <div id="vue-resa" class="cache largeur-std">
       <div class="resa-intro">
-        Réservez un créneau de 2h pour travailler au Fab Lab. Maximum 4 groupes par créneau.
-        Une réservation à venir à la fois par groupe (1A) ou par personne.
+        Réservez un créneau pour travailler au Fab Lab (2h ou 4h). Maximum 4 groupes par créneau.
+        Réservation possible au plus tard 24h avant le début du créneau.
       </div>
       <div id="resa-contenu"><div class="vide">Chargement des créneaux...</div></div>
     </div>
 
     <div id="vue-admin" class="cache largeur-std">
-      <!-- écran de connexion -->
       <div class="admin-login" id="admin-login">
         <h3><i class="ti ti-lock"></i> Espace administrateur</h3>
         <div class="al-sous">Réservé au responsable du Fab Lab.</div>
@@ -237,21 +242,26 @@
         <div class="modal-msg" id="adm-msg"></div>
         <button class="btn btn-valider btn-pleine" id="adm-btn" onclick="connexionAdmin()">Se connecter</button>
       </div>
-      <!-- panneau admin (après connexion) -->
       <div id="admin-panel" class="cache">
         <div class="admin-header">
           <div><div class="ah-titre">Réservations</div><div class="ah-user" id="adm-user"></div></div>
           <button class="btn-suppr" onclick="deconnexionAdmin()"><i class="ti ti-logout"></i> Déconnexion</button>
         </div>
+        <button class="btn btn-valider btn-pleine" style="margin-bottom:18px" onclick="ouvrirAjoutAdmin()"><i class="ti ti-plus"></i> Ajouter une réservation</button>
         <div id="admin-liste"><div class="vide">Chargement...</div></div>
       </div>
     </div>
   </main>
 
+  <!-- Modal réservation (élève) -->
   <div class="overlay" id="overlay">
     <div class="modal">
       <h3>Réserver un créneau</h3>
       <div class="modal-sous" id="modal-creneau"></div>
+      <div class="duree-choix" id="duree-choix">
+        <button class="duree-opt actif" id="opt-2h" onclick="choisirDuree(2)">2 heures<div class="do-h" id="h-2h"></div></button>
+        <button class="duree-opt" id="opt-4h" onclick="choisirDuree(4)">4 heures<div class="do-h" id="h-4h"></div></button>
+      </div>
       <div class="champ"><label>Nom complet</label><input type="text" id="in-nom" placeholder="Votre nom et prénom"></div>
       <div class="champ"><label>Email central</label><input type="email" id="in-email" placeholder="prenom.nom@centrale-casablanca.ma"></div>
       <div class="champ">
@@ -279,9 +289,58 @@
     </div>
   </div>
 
+  <!-- Modal ajout réservation (admin) -->
+  <div class="overlay" id="overlay-admin">
+    <div class="modal">
+      <h3>Ajouter une réservation</h3>
+      <div class="modal-sous">Ajout manuel — sans limite de délai ni de groupes</div>
+      <div class="champ"><label>Date</label><select id="adm-date"></select></div>
+      <div class="champ">
+        <label>Créneau</label>
+        <select id="adm-creneau">
+          <option value="08h30-10h15">08h30-10h15</option>
+          <option value="10h30-12h15">10h30-12h15</option>
+          <option value="14h00-15h45">14h00-15h45</option>
+          <option value="16h00-17h45">16h00-17h45</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label>Durée</label>
+        <select id="adm-duree">
+          <option value="2">2 heures</option>
+          <option value="4">4 heures (ce créneau + le suivant)</option>
+        </select>
+      </div>
+      <div class="champ"><label>Nom complet</label><input type="text" id="adm-nom" placeholder="Nom et prénom"></div>
+      <div class="champ"><label>Email central</label><input type="email" id="adm-mail-resa" placeholder="prenom.nom@centrale-casablanca.ma"></div>
+      <div class="champ">
+        <label>Niveau</label>
+        <select id="adm-niveau" onchange="majGroupeAdmin()">
+          <option value="">— Choisir —</option>
+          <option value="1A">1A</option>
+          <option value="2A">2A</option>
+          <option value="3A">3A</option>
+          <option value="Bachelor 1">Bachelor 1</option>
+          <option value="Bachelor 2">Bachelor 2</option>
+          <option value="Bachelor 3">Bachelor 3</option>
+          <option value="Bachelor 4">Bachelor 4</option>
+        </select>
+      </div>
+      <div class="champ cache-groupe" id="adm-champ-groupe">
+        <label>Numéro de groupe PLBD</label>
+        <input type="number" id="adm-groupe" placeholder="Ex : 17" min="1">
+      </div>
+      <div class="modal-msg" id="adm-resa-msg"></div>
+      <div class="modal-boutons">
+        <button class="btn btn-annuler" onclick="fermerAjoutAdmin()">Annuler</button>
+        <button class="btn btn-valider" id="adm-resa-btn" onclick="validerAjoutAdmin()">Ajouter</button>
+      </div>
+    </div>
+  </div>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, getDocs, runTransaction, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, runTransaction, doc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
     const firebaseConfig = {
@@ -303,7 +362,9 @@
 
     const MAX_GROUPES = 4;
     const MAX_RESA_SEMAINE = 4;
+    const DELAI_MIN_H = 24;
     const CRENEAUX_ORDRE = ["08h30-10h15", "10h30-12h15", "14h00-15h45", "16h00-17h45"];
+    const HEURE_DEBUT = { "08h30-10h15": [8,30], "10h30-12h15": [10,30], "14h00-15h45": [14,0], "16h00-17h45": [16,0] };
     const JOURS = ["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
 
     const SALLES = [
@@ -328,7 +389,7 @@
           { nom: "Bambulab", type: "Imprimante 3D FDM", ico: "🖨️", photo: "images/bambulab.jpg", desc: "Imprimante 3D rapide multi-matériaux à haute précision, idéale pour les pièces techniques et le prototypage exigeant." },
           { nom: "Ultimaker 3", type: "Imprimante 3D FDM", ico: "🖨️", photo: "images/ultimaker.webp", desc: "Imprimante double extrusion fiable, permettant l'impression de supports solubles pour des géométries complexes." },
           { nom: "FlashForge Creator Pro", type: "Imprimante 3D FDM", ico: "🖨️", photo: "images/flashforge.png", desc: "Imprimante à double extrudeur en enceinte fermée, adaptée à l'ABS et aux impressions bi-matières." },
-          { nom: "Makeblock mCreate 2.0", type: "Imprimante 3D FDM", ico: "🖨️", photo: "images/makeblock.webp", desc: "Imprimante 3D robuste avec plateau de découpe laser optionnel, adaptée à l'enseignement et aux projets pédagogiques." },
+          { nom: "Makeblock mCreate 2.0", type: "Imprimante 3D FDM", ico: "🖨️", photo: "images/makeblock.webp", desc: "Imprimante 3D robuste adaptée à l'enseignement et aux projets pédagogiques." },
           { nom: "Elegoo Jupiter SE", type: "Imprimante 3D résine (LCD)", ico: "💧", photo: "images/elegoo.webp", desc: "Imprimante résine grand format à très haute résolution, pour les pièces fines et détaillées." },
           { nom: "Découpe laser", type: "Machine de découpe", ico: "🔺", photo: "images/decoupe-laser.jpg", desc: "Machine de découpe et gravure laser pour le bois, l'acrylique et divers matériaux plans." }
         ] }
@@ -337,8 +398,9 @@
     let materiels = [];
     let categorieActive = "Tout";
     let creneaux = [];
-    let reservations = [];       // {..., _id: docId}
+    let reservations = [];
     let resaCourante = null;
+    let dureeChoisie = 2;
     let estAdmin = false;
 
     function parserCSV(texte) {
@@ -363,6 +425,8 @@
 
     function auj0() { const d = new Date(); d.setHours(0,0,0,0); return d; }
     function dateObj(dateStr) { return new Date(dateStr + "T00:00:00"); }
+    function debutCreneau(dateStr, creneau) { const [h,m] = HEURE_DEBUT[creneau]; const d = dateObj(dateStr); d.setHours(h,m,0,0); return d; }
+    function respecteDelai(dateStr, creneau) { const limite = new Date(Date.now() + DELAI_MIN_H*3600*1000); return debutCreneau(dateStr, creneau) >= limite; }
     function numSemaine(dateStr) {
       const d = dateObj(dateStr);
       const jeudi = new Date(d); jeudi.setDate(d.getDate() + 3 - ((d.getDay() + 6) % 7));
@@ -461,6 +525,9 @@
     }
 
     function resasDuCreneau(date, creneau) { return reservations.filter(r => r.date === date && r.creneau === creneau); }
+    function creneauOuvert(date, creneau) { return creneaux.some(c => c.date === date && c.creneau === creneau); }
+    function creneauReservable(date, creneau) { return creneauOuvert(date, creneau) && resasDuCreneau(date, creneau).length < MAX_GROUPES && respecteDelai(date, creneau); }
+    function creneauSuivant(creneau) { const i = CRENEAUX_ORDRE.indexOf(creneau); return (i >= 0 && i < CRENEAUX_ORDRE.length - 1) ? CRENEAUX_ORDRE[i+1] : null; }
 
     function construireResa() {
       const zone = document.getElementById("resa-contenu");
@@ -483,12 +550,16 @@
         for (const cr of CRENEAUX_ORDRE) {
           html += "<tr><td class='creneau-lbl'>" + cr + "</td>";
           for (const d of dates) {
-            const existe = cres.some(c => c.date === d && c.creneau === cr);
-            if (!existe) { html += "<td><div class='case nc'>—</div></td>"; continue; }
+            if (!creneauOuvert(d, cr)) { html += "<td><div class='case nc'>—</div></td>"; continue; }
             const rs = resasDuCreneau(d, cr);
             const tags = rs.map(r => "<span class='grp-tag'>" + libelleResa(r) + "</span>").join(" ");
-            if (rs.length >= MAX_GROUPES) html += "<td><div class='case complet'><div style='font-weight:700'>Complet</div>" + tags + "</div></td>";
-            else html += "<td><div class='case dispo' onclick=\"ouvrirModal('" + d + "','" + cr + "')\">" + (tags||"") + "<span class='cta'><i class='ti ti-plus'></i>Réserver</span><span class='case-count'>" + rs.length + "/" + MAX_GROUPES + "</span></div></td>";
+            if (rs.length >= MAX_GROUPES) {
+              html += "<td><div class='case complet'><div style='font-weight:700'>Complet</div>" + tags + "</div></td>";
+            } else if (!respecteDelai(d, cr)) {
+              html += "<td><div class='case trop-tard'>" + (tags||"") + "<span style='font-size:10px'>Délai dépassé</span></div></td>";
+            } else {
+              html += "<td><div class='case dispo' onclick=\"ouvrirModal('" + d + "','" + cr + "')\">" + (tags||"") + "<span class='cta'><i class='ti ti-plus'></i>Réserver</span><span class='case-count'>" + rs.length + "/" + MAX_GROUPES + "</span></div></td>";
+            }
           }
           html += "</tr>";
         }
@@ -501,9 +572,24 @@
       const niveau = document.getElementById("in-niveau").value;
       document.getElementById("champ-groupe").style.display = (niveau === "1A") ? "block" : "none";
     };
+    window.choisirDuree = function(d) {
+      if (d === 4 && !resaCourante.creneauSuivant) return;
+      dureeChoisie = d;
+      document.getElementById("opt-2h").className = "duree-opt" + (d===2 ? " actif" : "");
+      document.getElementById("opt-4h").className = "duree-opt" + (d===4 ? " actif" : "");
+    };
     window.ouvrirModal = function(date, creneau) {
-      resaCourante = { date, creneau };
-      document.getElementById("modal-creneau").textContent = libelleJour(date) + " " + dateFr(date) + " · " + creneau;
+      const suivant = creneauSuivant(creneau);
+      const suivantOk = suivant && creneauReservable(date, suivant);
+      resaCourante = { date, creneau, creneauSuivant: suivantOk ? suivant : null };
+      dureeChoisie = 2;
+      document.getElementById("modal-creneau").textContent = libelleJour(date) + " " + dateFr(date);
+      document.getElementById("h-2h").textContent = creneau;
+      const opt4 = document.getElementById("opt-4h");
+      if (suivantOk) { document.getElementById("h-4h").textContent = creneau.split("-")[0] + "–" + suivant.split("-")[1]; opt4.disabled = false; }
+      else { document.getElementById("h-4h").textContent = "indisponible"; opt4.disabled = true; }
+      document.getElementById("opt-2h").className = "duree-opt actif";
+      opt4.className = "duree-opt";
       document.getElementById("in-nom").value = "";
       document.getElementById("in-email").value = "";
       document.getElementById("in-niveau").value = "";
@@ -530,40 +616,43 @@
       let groupe = null;
       if (niveau === "1A") { groupe = parseInt(groupeStr, 10); if (!groupe || groupe < 1) { msg.textContent = "Numéro de groupe PLBD invalide."; return; } }
 
-      const { date, creneau } = resaCourante;
+      const { date, creneau, creneauSuivant } = resaCourante;
+      const aReserver = (dureeChoisie === 4 && creneauSuivant) ? [creneau, creneauSuivant] : [creneau];
       const semaineCible = numSemaine(date);
-      const auj = auj0();
-      const nouvelle = { date, creneau, niveau, groupe, nom, email, cree: new Date().toISOString() };
-      const identNouv = identiteResa(nouvelle);
+      const resaId = Date.now() + "-" + Math.random().toString(36).slice(2, 8);
+      const ident = identiteResa({ niveau, groupe, email });
       btn.disabled = true; msg.className = "modal-msg"; msg.textContent = "Enregistrement...";
 
       try {
         await runTransaction(db, async (tx) => {
           const snap = await getDocs(collection(db, "reservations"));
           const toutes = []; snap.forEach(d => toutes.push(d.data()));
-          const duCreneau = toutes.filter(r => r.date === date && r.creneau === creneau);
-          if (duCreneau.length >= MAX_GROUPES) throw new Error("COMPLET");
-          if (duCreneau.some(r => identiteResa(r) === identNouv)) throw new Error("DEJA_CE_CRENEAU");
-          const aVenir = toutes.filter(r => identiteResa(r) === identNouv && dateObj(r.date) >= auj);
-          if (aVenir.length > 0) throw new Error("DEJA_ACTIVE");
-          const memeSemaine = toutes.filter(r => identiteResa(r) === identNouv && numSemaine(r.date) === semaineCible);
-          if (memeSemaine.length >= MAX_RESA_SEMAINE) throw new Error("MAX_SEMAINE");
-          const ref = doc(collection(db, "reservations"));
-          tx.set(ref, nouvelle);
+          for (const cr of aReserver) {
+            const duCreneau = toutes.filter(r => r.date === date && r.creneau === cr);
+            if (duCreneau.length >= MAX_GROUPES) throw new Error("COMPLET");
+            if (duCreneau.some(r => identiteResa(r) === ident)) throw new Error("DEJA_CE_CRENEAU");
+            if (!respecteDelai(date, cr)) throw new Error("DELAI");
+          }
+          const memeSemaine = toutes.filter(r => identiteResa(r) === ident && numSemaine(r.date) === semaineCible);
+          if (memeSemaine.length + aReserver.length > MAX_RESA_SEMAINE) throw new Error("MAX_SEMAINE");
+          for (const cr of aReserver) {
+            const ref = doc(collection(db, "reservations"));
+            tx.set(ref, { date, creneau: cr, niveau, groupe, nom, email, resaId, duree: aReserver.length*2, cree: new Date().toISOString() });
+          }
         });
         msg.className = "modal-msg ok"; msg.textContent = "Réservation confirmée !";
         await chargerReservations(); construireResa();
         setTimeout(fermerModal, 1200);
       } catch (e) {
         msg.className = "modal-msg erreur";
-        const messages = { "COMPLET": "Ce créneau est complet (4 groupes).", "DEJA_CE_CRENEAU": "Vous avez déjà réservé ce créneau.", "DEJA_ACTIVE": "Vous avez déjà une réservation à venir. Attendez qu'elle soit passée.", "MAX_SEMAINE": "Limite de réservations atteinte pour cette semaine." };
+        const messages = { "COMPLET": "Un des créneaux est complet (4 groupes).", "DEJA_CE_CRENEAU": "Vous avez déjà réservé un de ces créneaux.", "DELAI": "Trop tard : réservation possible au plus tard 24h avant.", "MAX_SEMAINE": "Limite de réservations atteinte pour cette semaine." };
         msg.textContent = messages[e.message] || "Erreur, réessayez.";
         btn.disabled = false;
         await chargerReservations(); construireResa();
       }
     };
 
-    // ---------- ADMIN ----------
+    // ---------- ADMIN : connexion ----------
     window.connexionAdmin = async function() {
       const email = document.getElementById("adm-email").value.trim();
       const pass = document.getElementById("adm-pass").value;
@@ -572,19 +661,13 @@
       msg.className = "modal-msg erreur";
       if (!email || !pass) { msg.textContent = "Renseignez email et mot de passe."; return; }
       btn.disabled = true; msg.className = "modal-msg"; msg.textContent = "Connexion...";
-      try {
-        await signInWithEmailAndPassword(auth, email, pass);
-        // onAuthStateChanged prend le relais
-      } catch (e) {
-        msg.className = "modal-msg erreur";
-        msg.textContent = "Email ou mot de passe incorrect.";
-        btn.disabled = false;
-      }
+      try { await signInWithEmailAndPassword(auth, email, pass); }
+      catch (e) { msg.className = "modal-msg erreur"; msg.textContent = "Email ou mot de passe incorrect."; btn.disabled = false; }
     };
     window.deconnexionAdmin = async function() { await signOut(auth); };
 
     onAuthStateChanged(auth, (user) => {
-            estAdmin = !!(user && ADMIN_UIDS.includes(user.uid));
+      estAdmin = !!(user && ADMIN_UIDS.includes(user.uid));
       const login = document.getElementById("admin-login");
       const panel = document.getElementById("admin-panel");
       const btn = document.getElementById("adm-btn");
@@ -596,7 +679,7 @@
         login.classList.remove("cache"); panel.classList.add("cache");
         if (btn) btn.disabled = false;
         const msg = document.getElementById("adm-msg");
-        if (user && user.uid !== ADMIN_UID) { msg.className = "modal-msg erreur"; msg.textContent = "Ce compte n'a pas les droits administrateur."; signOut(auth); }
+        if (user && !ADMIN_UIDS.includes(user.uid)) { msg.className = "modal-msg erreur"; msg.textContent = "Ce compte n'a pas les droits administrateur."; signOut(auth); }
       }
     });
 
@@ -604,7 +687,6 @@
       await chargerReservations();
       const zone = document.getElementById("admin-liste");
       const auj = auj0();
-      // trier : à venir d'abord, par date puis créneau
       const triees = [...reservations].sort((a,b) => (a.date+a.creneau).localeCompare(b.date+b.creneau));
       if (triees.length === 0) { zone.innerHTML = "<div class='vide'>Aucune réservation enregistrée.</div>"; return; }
       let html = "";
@@ -629,16 +711,83 @@
     window.supprimerResa = async function(id) {
       if (!estAdmin) return;
       if (!confirm("Annuler définitivement cette réservation ?")) return;
+      try { await deleteDoc(doc(db, "reservations", id)); await afficherAdmin(); await chargerReservations(); construireResa(); }
+      catch (e) { alert("Erreur lors de l'annulation. Vérifiez votre connexion."); }
+    };
+
+    // ---------- ADMIN : ajout manuel de réservation ----------
+    window.ouvrirAjoutAdmin = function() {
+      if (!estAdmin) return;
+      const dates = Array.from(new Set(creneaux.map(c => c.date))).sort();
+      const selDate = document.getElementById("adm-date");
+      selDate.innerHTML = "";
+      if (dates.length === 0) {
+        const o = document.createElement("option"); o.value=""; o.textContent="Aucune date ouverte"; selDate.appendChild(o);
+      } else {
+        for (const d of dates) { const o = document.createElement("option"); o.value = d; o.textContent = libelleJour(d) + " " + dateFr(d); selDate.appendChild(o); }
+      }
+      document.getElementById("adm-creneau").value = "08h30-10h15";
+      document.getElementById("adm-duree").value = "2";
+      document.getElementById("adm-nom").value = "";
+      document.getElementById("adm-mail-resa").value = "";
+      document.getElementById("adm-niveau").value = "";
+      document.getElementById("adm-groupe").value = "";
+      document.getElementById("adm-champ-groupe").style.display = "none";
+      const msg = document.getElementById("adm-resa-msg"); msg.textContent = ""; msg.className = "modal-msg";
+      document.getElementById("adm-resa-btn").disabled = false;
+      document.getElementById("overlay-admin").classList.add("actif");
+    };
+    window.fermerAjoutAdmin = function() { document.getElementById("overlay-admin").classList.remove("actif"); };
+    window.majGroupeAdmin = function() {
+      const niveau = document.getElementById("adm-niveau").value;
+      document.getElementById("adm-champ-groupe").style.display = (niveau === "1A") ? "block" : "none";
+    };
+
+    window.validerAjoutAdmin = async function() {
+      if (!estAdmin) return;
+      const date = document.getElementById("adm-date").value;
+      const creneau = document.getElementById("adm-creneau").value;
+      const duree = parseInt(document.getElementById("adm-duree").value, 10);
+      const nom = document.getElementById("adm-nom").value.trim();
+      const email = document.getElementById("adm-mail-resa").value.trim().toLowerCase();
+      const niveau = document.getElementById("adm-niveau").value;
+      const groupeStr = document.getElementById("adm-groupe").value.trim();
+      const msg = document.getElementById("adm-resa-msg");
+      const btn = document.getElementById("adm-resa-btn");
+      msg.className = "modal-msg erreur";
+
+      if (!date) { msg.textContent = "Choisissez une date."; return; }
+      if (!nom || nom.length < 3) { msg.textContent = "Indiquez le nom complet."; return; }
+      const emailOk = /^[a-z]+([._][a-z]+)*@centrale-casablanca\.ma$/.test(email);
+      if (!emailOk) { msg.textContent = "Email central invalide."; return; }
+      if (!niveau) { msg.textContent = "Choisissez le niveau."; return; }
+      let groupe = null;
+      if (niveau === "1A") { groupe = parseInt(groupeStr, 10); if (!groupe || groupe < 1) { msg.textContent = "Numéro de groupe PLBD invalide."; return; } }
+
+      // créneaux à écrire selon la durée (sans limite admin)
+      const aReserver = [creneau];
+      if (duree === 4) {
+        const suiv = creneauSuivant(creneau);
+        if (suiv) aReserver.push(suiv);
+      }
+      const resaId = Date.now() + "-" + Math.random().toString(36).slice(2, 8);
+      btn.disabled = true; msg.className = "modal-msg"; msg.textContent = "Ajout en cours...";
+
       try {
-        await deleteDoc(doc(db, "reservations", id));
-        await afficherAdmin();
-        await chargerReservations(); construireResa();
+        // écriture directe, sans les contrôles de limite (c'est l'admin)
+        for (const cr of aReserver) {
+          const ref = doc(collection(db, "reservations"));
+          await setDoc(ref, { date, creneau: cr, niveau, groupe, nom, email, resaId, duree: aReserver.length*2, ajoutAdmin: true, cree: new Date().toISOString() });
+        }
+        msg.className = "modal-msg ok"; msg.textContent = "Réservation ajoutée !";
+        await chargerReservations(); construireResa(); await afficherAdmin();
+        setTimeout(fermerAjoutAdmin, 1000);
       } catch (e) {
-        alert("Erreur lors de l'annulation. Vérifiez votre connexion.");
+        msg.className = "modal-msg erreur"; msg.textContent = "Erreur lors de l'ajout. Réessayez.";
+        btn.disabled = false;
       }
     };
 
-    // ---------- NAVIGATION ----------
     window.basculer = function(codeRng) {
       const c = document.getElementById("cont-" + codeRng);
       const ch = document.getElementById("chev-" + codeRng);
